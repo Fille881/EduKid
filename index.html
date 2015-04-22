@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="css/myCss.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript"></script>
+    <script type="text/javascript">
+    </script>
   </head>
   <body>
     <div class="container">
@@ -27,7 +28,7 @@
 	
     	<div class="row text-center">
     		<div class="col-md-4">
-    			<button type="button" class="btn btn-primary" id="world">World Map</button>
+    			<button type="button" class="btn btn-primary" id="world" onclick="loadMap('world_mill_en');">World Map</button>
     		</div>
         <div class="col-md-4">
           <button type="button" class="btn btn-primary" id="europe">Europe</button>
@@ -35,15 +36,20 @@
         <div class="col-md-4">
           <button type="button" class="btn btn-primary" id="sweden">Sweden</button>
         </div>
-    	</div> <!-- close row 3 -->
-      <script type="text/javascript">
-        //right now all three point to the same map. would be good to create a function in the external file
-        //to switch to different maps and call it here
-        $('#world, #europe, #sweden').click(function(){
-          window.location = "map_game/map.html";
-        });
-    </script>
+    	</div> <!-- close row 3 -->      
     </div> <!-- close container-->
+    <script type="text/javascript">
+        //code to direct where each button goes
+          document.getElementById("sweden").onclick = function(){
+            location.href = "map_game/sweden.html";
+          }
+          document.getElementById("europe").onclick = function(){
+            location.href="map_game/europe.html";
+          }
+          document.getElementById("world").onclick = function(){
+            location.href="map_game/world.html";
+          }
+    </script>
   </body>
 </html>
 	

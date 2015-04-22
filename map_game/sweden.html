@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>EduKid</title>
+  <title>jVectorMap demo</title>
   <link rel="stylesheet" href="jquery-jvectormap-2.0.2.css" type="text/css" media="screen"/>
   <script src="jquery-1.11.2.min.js"></script>
-  <script src="../js/gamescript.js"></script>
   <script src="jquery-jvectormap-2.0.2.min.js"></script>
-  <script src="jquery-jvectormap-world-mill-en.js"></script>
   <script src="jquery-jvectormap-se-mill-en.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="../js/map.js">
-  </script>  
-
-  <style>
+  <script src="../js/map.js"></script>
+ <style>
   #map {
     margin-left: auto;
     margin-right: auto;
@@ -30,8 +26,11 @@
 </head>
 <body>
 <div class="container">
-<button type="button" class="btn btn-primary" id="world" onclick="loadMap('world_mill_en');">world</button>
+<!--<button type="button" class="btn btn-primary remove-all-marker">Reset markers</button>-->
   <div id="map" style="width: 1200px; height: 800px"></div>
   </div>
+  <script type="text/javascript">
+    loadMap('se_mill_en');
+  </script>
 </body>
 </html>
