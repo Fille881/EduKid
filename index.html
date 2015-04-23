@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/myCss.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
     <script type="text/javascript">
     </script>
   </head>
@@ -28,28 +29,16 @@
 	
     	<div class="row text-center">
     		<div class="col-md-4">
-    			<button type="button" class="btn btn-primary" id="world" onclick="loadMap('world_mill_en');">World Map</button>
+    			<button type="button" class="btn btn-primary" id="world" onclick="chooseMap()">World Map</button>
     		</div>
         <div class="col-md-4">
-          <button type="button" class="btn btn-primary" id="europe">Europe</button>
+          <button type="button" class="btn btn-primary" id="europe" onclick="chooseMap()">Europe</button>
         </div>
         <div class="col-md-4">
-          <button type="button" class="btn btn-primary" id="sweden">Sweden</button>
+          <button type="button" class="btn btn-primary" id="sweden" onclick="chooseMap()">Sweden</button>
         </div>
     	</div> <!-- close row 3 -->      
     </div> <!-- close container-->
-    <script type="text/javascript">
-        //code to direct where each button goes
-          document.getElementById("sweden").onclick = function(){
-            location.href = "map_game/sweden.html";
-          }
-          document.getElementById("europe").onclick = function(){
-            location.href="map_game/europe.html";
-          }
-          document.getElementById("world").onclick = function(){
-            location.href="map_game/world.html";
-          }
-    </script>
   </body>
 </html>
 	

@@ -1,3 +1,4 @@
+//load map and basic functionality
 function loadMap(map){
   var specificMap = map;
   map = new jvm.Map({
@@ -16,16 +17,16 @@ function loadMap(map){
               console.log("Correct!");//test purposes
               map.setSelectedRegions(code);
             }else{
+              map.clearSelectedRegions(code);
               console.log("Wrong. Try again.");
             }
           }
         }
       });
     },
-
   });
 }
-
+//Directs user to correct map
 function chooseMap(){
   document.getElementById("sweden").onclick = function(){
     location.href = "map_game/sweden.html";
