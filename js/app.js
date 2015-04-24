@@ -26,17 +26,12 @@ function loadMap(map){
     },
   });
 }
+
 //Directs user to correct map
-function chooseMap(){
-  document.getElementById("sweden").onclick = function(){
-    location.href = "map_game/sweden.html";
-  }
-  document.getElementById("europe").onclick = function(){
-    location.href="map_game/europe.html";
-  }
-  document.getElementById("world").onclick = function(){
-    location.href="map_game/world.html";
-  }
-}
+$(document).ready(function() {
+    $(".btn").click(function() {
+        window.location.assign('map_game/' + this.id + '.html');
+    })
+});
   
 
