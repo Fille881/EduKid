@@ -1,0 +1,9 @@
+//todo file
+
+1. When a user clicks on an already selected regions, nothing should happen, or just a message
+that that region is already completed.
+
+2. Randomize initially selected region (selectedRegions: []): almost done, just left to figure out why getRandomCountryCode(specificMap) returns undefined. Update: it returns undefined because get json is an async call, use a callback function that uses getjson return value. 
+Good info on ansyc calls: http://stackoverflow.com/questions/14220321/how-to-return-the-response-from-an-asynchronous-call
+
+3. Include markers?

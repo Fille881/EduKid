@@ -1,11 +1,21 @@
+//Directs user to correct map
+$(document).ready(function() {
+    $(".btn").click(function() {
+        window.location.assign('map_game/' + this.id + '.html');
+    })
+});
+
 //load map and basic functionality
 function loadMap(map){
   var specificMap = map;
+  y = getRandomCountryCode(specificMap);
+  console.log("y is: " + y);
   map = new jvm.Map({
     container: $('#map'),
     map: map,//pass a string when you call the function, the string determines which function is called
     backgroundColor: ['#1E90FF'],//map background color    
     regionsSelectable:true,//this needs to be true to be able to select a region
+    selectedRegions: ["RU"],
     onRegionClick: function(event, code){
       var map = $('#map').vectorMap('get', 'mapObject');//gets the map data
       var regionName = map.getRegionName(code);//gets name of current country
@@ -17,7 +27,6 @@ function loadMap(map){
               console.log("Correct!");//test purposes
               map.setSelectedRegions(code);
             }else{
-              map.clearSelectedRegions(code);
               console.log("Wrong. Try again.");
             }
           }
@@ -27,11 +36,23 @@ function loadMap(map){
   });
 }
 
-//Directs user to correct map
-$(document).ready(function() {
-    $(".btn").click(function() {
-        window.location.assign('map_game/' + this.id + '.html');
-    })
-});
+//gets all country codes from json file and puts them in an array
+function getRandomCountryCode(specificMap){
   
+  var obj = $.getJSON('../maps/' + specificMap + '.json', function( data ) {
+    var countries = [];
+    for (var i in data.country) {
+      countries.push(data.country[i].code);
+    }
+    var rndCountryCode = countries[Math.floor(Math.random()*countries.length)];
+    getValue(rndCountryCode);
+  });
+};
+
+function getValue(rndCountryCode){
+    x = rndCountryCode;
+    console.log("X is: " + x);
+    return x;
+  };
+
 

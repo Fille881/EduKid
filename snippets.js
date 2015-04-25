@@ -4,4 +4,4 @@ snippets: random snippets of code to reuse, mostly for testing purposes
 map.getSelectedRegions(code).indexOf(code)
 
 //info on generating geoJSON files from shapefiles
-http://stackoverflow.com/a/17267249/1205706
+stackoverflow.com/a/17267249/1205706
