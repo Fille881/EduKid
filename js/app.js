@@ -5,8 +5,6 @@ $(document).ready(function() {
     })
 });
 
-
-
 function loadMap(mapString){
   $.getJSON('../maps/' + mapString + '.json', function( data ) {
       getRandomCountryCode(data);
@@ -42,21 +40,25 @@ function askQuestionOnClick(data, code){
   var regionName = mapObj.getRegionName(code);
   var counter = 0;
   for (var i in data.country) {
-    while (counter < 3){
-      var answer = prompt("Attempt: >>" + (counter+1) + "<<. Question for " + regionName + ": " + data.country[i].question);      
-      if(data.country[i].answer === answer){
-        console.log("Correct!");
-        mapObj.setSelectedRegions(code);
-        counter = 3;
-      }else{
-        console.log("Please try again.");
-        counter ++;
-        console.log(counter);
-        if(counter === 3){
-          alert("That was your last try. Game over!");
-          map.clearSelectedRegions();
+    if(regionName === data.country[i].name){
+      while (counter < 3){
+        var answer = prompt("Attempt for " + data.country[i].name + ": >>" + (counter+1) + "<<. Question for " + regionName + ": " + data.country[i].question);      
+        if(data.country[i].answer === answer){
+          console.log("Correct!");
+          console.log(data.country[i].answer);
+          mapObj.setSelectedRegions(code);
+          counter = 3;
+        }else{
+          console.log("Please try again.");
+          counter ++;
+          console.log(counter);
+          if(counter === 3){
+            alert("That was your last try. Game over!");
+            map.clearSelectedRegions();
+          }
         }
       }
     }
   }     
 }
+
