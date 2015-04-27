@@ -5,54 +5,58 @@ $(document).ready(function() {
     })
 });
 
-//load map and basic functionality
-function loadMap(map){
-  var specificMap = map;
-  y = getRandomCountryCode(specificMap);
-  console.log("y is: " + y);
-  map = new jvm.Map({
-    container: $('#map'),
-    map: map,//pass a string when you call the function, the string determines which function is called
-    backgroundColor: ['#1E90FF'],//map background color    
-    regionsSelectable:true,//this needs to be true to be able to select a region
-    selectedRegions: ["RU"],
-    onRegionClick: function(event, code){
-      var map = $('#map').vectorMap('get', 'mapObject');//gets the map data
-      var regionName = map.getRegionName(code);//gets name of current country
-      $.getJSON('../maps/' + specificMap + '.json', function(data) {
-        for (var i in data.country) {//loops through json file
-          if (data.country[i].name === regionName){//finds which json field matches the current region country name
-            var answer = prompt("Question for " + regionName + ": " + data.country[i].question);//asks the question
-            if(data.country[i].answer === answer){//checks if answer correct
-              console.log("Correct!");//test purposes
-              map.setSelectedRegions(code);
-            }else{
-              console.log("Wrong. Try again.");
-            }
-          }
-        }
-      });
-    },
+
+
+function loadMap(mapString){
+  $.getJSON('../maps/' + mapString + '.json', function( data ) {
+      getRandomCountryCode(data);
+      map = new jvm.Map({
+      container: $('#map'),      
+      map: mapString,
+      backgroundColor: ['#1E90FF'],
+      regionsSelectable: true,
+      markersSelectable: true,
+      selectedRegions: [rndCountry],
+      onRegionClick: function(event, code){
+        $.getJSON('../maps/' + mapString + '.json', function( data ) {
+          askQuestionOnClick(data, code);
+        });      
+      },
+    });
   });
 }
 
-//gets all country codes from json file and puts them in an array
-function getRandomCountryCode(specificMap){
-  
-  var obj = $.getJSON('../maps/' + specificMap + '.json', function( data ) {
-    var countries = [];
-    for (var i in data.country) {
-      countries.push(data.country[i].code);
+//Returns a random country code from JSON file
+function getRandomCountryCode(data){
+  var countries = [];
+  for (var i in data.country) {
+    countries.push(data.country[i].code);
+  }
+  rndCountry = countries[Math.floor(Math.random()*countries.length)];
+  return rndCountry;
+}
+
+//Ask question and validates answer
+function askQuestionOnClick(data, code){
+  var mapObj = $('#map').vectorMap('get', 'mapObject');
+  var regionName = mapObj.getRegionName(code);
+  var counter = 0;
+  for (var i in data.country) {
+    while (counter < 3){
+      var answer = prompt("Attempt: >>" + (counter+1) + "<<. Question for " + regionName + ": " + data.country[i].question);      
+      if(data.country[i].answer === answer){
+        console.log("Correct!");
+        mapObj.setSelectedRegions(code);
+        counter = 3;
+      }else{
+        console.log("Please try again.");
+        counter ++;
+        console.log(counter);
+        if(counter === 3){
+          alert("That was your last try. Game over!");
+          map.clearSelectedRegions();
+        }
+      }
     }
-    var rndCountryCode = countries[Math.floor(Math.random()*countries.length)];
-    getValue(rndCountryCode);
-  });
-};
-
-function getValue(rndCountryCode){
-    x = rndCountryCode;
-    console.log("X is: " + x);
-    return x;
-  };
-
-
+  }     
+}
