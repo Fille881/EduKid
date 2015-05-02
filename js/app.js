@@ -17,6 +17,18 @@ function loadMap(mapString){
       regionsSelectable: true,
       markersSelectable: true,
       selectedRegions: [rndCountry],
+      onRegionTipShow: function(event, label, code){
+        var mapObj = $('#map').vectorMap('get', 'mapObject');
+        var regionName = mapObj.getRegionName(code);
+        var x;
+        for (var i in data.country) {
+        if(regionName === data.country[i].name){
+          var x = data.country[i].points;
+        }
+      };
+       label.html('<img src=\"../img/globe.png\" width=\"20px\" height=\"20px\""><br>This country is worth ' + x + ' points.');   
+       //label.html('');    
+     },
       onRegionClick: function(event, code){
         $.getJSON('../maps/' + mapString + '.json', function( data ) {
           askQuestionOnClick(data, code);
