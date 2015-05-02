@@ -26,7 +26,7 @@ function loadMap(mapString){
           var x = data.country[i].points;
         }
       };
-       label.html('<img src=\"../img/globe.png\" width=\"20px\" height=\"20px\""><br>This country is worth ' + x + ' points.');   
+       label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"13px\""><br>This country is worth ' + x + ' points.');   
        //label.html('');    
      },
       onRegionClick: function(event, code){
