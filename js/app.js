@@ -17,7 +17,16 @@ function loadMap(mapString){
       regionsSelectable: true,
       markersSelectable: true,
       selectedRegions: [rndCountry],
-      onRegionClick: function(event, code){
+      onRegionTipShow: function(event, label, code){
+		  var mapObj = $('#map').vectorMap('get', 'mapObject');
+		  var regionName = mapObj.getRegionName(code);
+		  for (var i in data.country) {
+		  	if(regionName === data.country[i].name){
+			  	x = data.country[i].points;
+			  }  	
+			}
+	      label.html("This region is worth" + " " + + x + " " + "points" );},  
+       onRegionClick: function(event, code){
         $.getJSON('../maps/' + mapString + '.json', function( data ) {
           askQuestionOnClick(data, code);
         });      
