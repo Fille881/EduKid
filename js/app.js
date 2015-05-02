@@ -48,12 +48,27 @@ function getRandomCountryCode(data){
   return rndCountry;
 }
 
+
+function deselectCountry(code){
+	
+	  if(map.regions[code].element.isSelected) {
+		    console.log("Auto-deselecting: " + code);
+		
+		    var o = {};
+		    o[code] = false;
+		
+		    map.setSelectedRegions(o);
+		}
+	
+}
+
 //Ask question and validates answer
 function askQuestionOnClick(data, code){
   var mapObj = $('#map').vectorMap('get', 'mapObject');
   var regionName = mapObj.getRegionName(code);
   var counter = 0;
   for (var i in data.country) {
+	var currentCode = data.country[i].code;
     if(regionName === data.country[i].name){
       while (counter < 3){
         var answer = prompt("Attempt for " + data.country[i].name + ": >>" + (counter+1) + "<<. Question for " + regionName + ": " + data.country[i].question);      
@@ -69,8 +84,8 @@ function askQuestionOnClick(data, code){
           counter ++;
           console.log(counter);
           if(counter === 3){
-            alert("That was your last try. Game over!");
-            map.clearSelectedRegions();
+            console.log("That was your last try. Game over!");
+            deselectCountry(code);   
           }
         }
       }
