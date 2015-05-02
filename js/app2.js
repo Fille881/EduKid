@@ -64,7 +64,8 @@ function swalPrompt(mapString, regionName){
             }
             if (inputValue == currentAnswer){
               console.log("correct");
-              swal("Nice!", "You wrote: " + inputValue, "success");
+              swal("Nice!", "You wrote: " + inputValue, + "success" + data.country[i].points);
+              
             }else{
               console.log("incorrect");
               console.log(inputValue);

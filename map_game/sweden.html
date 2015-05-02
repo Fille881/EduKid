@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>jVectorMap demo</title>
+  <title>Geography</title>
   <link rel="stylesheet" href="jquery-jvectormap-2.0.2.css" type="text/css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="../plugin/dist/sweetalert.css">
   <script src="../plugin/dist/sweetalert.min.js"></script>
@@ -10,7 +10,7 @@
   <script src="jquery-jvectormap-se-mill-en.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="../js/app2.js"></script>
+  <script src="../js/app.js"></script>
  <style>
   #map {
     margin-left: auto;
@@ -19,18 +19,32 @@
     margin-top: 0;
     margin-bottom: 0;
   }
-  body {
-    background-color: #1E90FF;
-  }
-  </style>
+ </style>
 </head>
 <body>
 <div class="container">
-<!--<button type="button" class="btn btn-primary remove-all-marker">Reset markers</button>-->
-  <div id="map" style="width: 1200px; height: 800px"></div>
-  </div>
-  <script type="text/javascript">
-    loadMap('se_mill_en');
-  </script>
+	<div class="row">
+		<div class="col-md-2 bg-danger" id="points">
+			
+		</div>
+		<div class="col-md-9 bg-info" id="countryPoints">
+			
+		</div>
+	</div>
+	
+	<div class="row bg-info"> 
+		<div class="col-md-12" id="map" style="width: 1200px; height: 800px">
+			<!--<button type="button" class="btn btn-primary remove-all-marker">Reset markers</button>-->
+			
+		</div>
+	 </div>
+</div>
+	  
+<script type="text/javascript">
+	 loadMap('se_mill_en');
+</script>
+
+	  
+	  
 </body>
 </html>
