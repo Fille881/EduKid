@@ -1,8 +1,8 @@
 //Directs user to correct map
 $(document).ready(function() {
-    $(".btn").click(function() {
-        window.location.assign('map_game/' + this.id + '.html');
-    })
+  $(".btn").click(function() {
+      window.location.assign('map_game/' + this.id + '.html');
+  })
 });
 
 var points = parseInt('0');
@@ -17,34 +17,20 @@ function loadMap(mapString){
       regionsSelectable: true,
       markersSelectable: true,
       selectedRegions: [rndCountry],
-      //renders static country code labels, a bit annoying for now, needs some filtering. Remove /*...*/ too see how it works
+      //renders static country code labels, a bit annoying for now
+      //Remove /*...*/ too see how it works
       /*labels:{
         regions:{
           render: function (code){
-              return code;
+            return code;
           }
         }
       },*/
       onRegionTipShow: function(event, label, code){
         var mapObj = $('#map').vectorMap('get', 'mapObject');
         var regionName = mapObj.getRegionName(code);
-        var x;
         var selected = map.regions[code].element.isSelected;
-        if(map.regions[code].element.isSelected){
-          for (var i in data.country) {
-            if(regionName === data.country[i].name){
-              var x = data.country[i].points;
-            }
-          };
-         label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"13px\""> -- ' + regionName + '<br>This country is worth ' + x + ' points.');   
-       }else{
-          for (var i in data.country) {
-            if(regionName === data.country[i].name){
-              var x = data.country[i].points;
-            }
-          };
-         label.html('This country is worth ' + x + ' points.');
-       }   
+        customLabel(selected, data, regionName, mapObj, label, code);   
      },
       onRegionClick: function(event, code){
         if(!map.regions[code].element.isSelected){
@@ -53,6 +39,7 @@ function loadMap(mapString){
           }); 
         }else{
           alert("Already selected.");
+          //prevents region selection by default
           event.preventDefault();
         }     
       },
@@ -70,18 +57,17 @@ function getRandomCountryCode(data){
   return rndCountry;
 }
 
-
-function deselectCountry(code){
-	
-	  if(map.regions[code].element.isSelected) {
-		    console.log("Auto-deselecting: " + code);
-		
-		    var o = {};
-		    o[code] = false;
-		
-		    map.setSelectedRegions(o);
-		}
-	
+//deselects clicked on region, used when answer is false. 
+//Explanation: if regions isSelected, create an object "o", 
+//add to it property "code"(dynamic value, current country code) with value "false"
+//call setSelectedRegions with that property: value key
+function deselectCountry(code){	
+  if(map.regions[code].element.isSelected) {
+	    console.log("Auto-deselecting: " + code);	
+	    var o = {};
+	    o[code] = false;	
+	    map.setSelectedRegions(o);
+	}	
 }
 
 //Ask question and validates answer
@@ -96,7 +82,6 @@ function askQuestionOnClick(data, code){
         var answer = prompt("Attempt for " + data.country[i].name + ": >>" + (counter+1) + "<<. Question for " + regionName + ": " + data.country[i].question);      
         if(data.country[i].answer === answer){
           console.log("Correct!" + data.country[i].points);
-          console.log(data.country[i].answer);
           mapObj.setSelectedRegions(code);
           counter = 3;
           points = points + parseInt(data.country[i].points);
@@ -115,3 +100,23 @@ function askQuestionOnClick(data, code){
   }     
 }
 
+//renders custom display label 
+//if region already selected -> display flag, name, points
+//else -> display just points
+function customLabel(selected, data, regionName, mapObj, label, code){
+  if(selected === true){
+    for (var i in data.country) {
+      if(regionName === data.country[i].name){
+        var x = data.country[i].points;
+      }
+    };
+   label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"13px\""> -- ' + regionName + '<br>This country is worth ' + x + ' points.');   
+ }else{
+    for (var i in data.country) {
+      if(regionName === data.country[i].name){
+        var x = data.country[i].points;
+      }
+    };
+   label.html('This country is worth ' + x + ' points.');
+ }   
+}
