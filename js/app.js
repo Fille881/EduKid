@@ -17,22 +17,44 @@ function loadMap(mapString){
       regionsSelectable: true,
       markersSelectable: true,
       selectedRegions: [rndCountry],
+      //renders static country code labels, a bit annoying for now, needs some filtering. Remove /*...*/ too see how it works
+      /*labels:{
+        regions:{
+          render: function (code){
+              return code;
+          }
+        }
+      },*/
       onRegionTipShow: function(event, label, code){
         var mapObj = $('#map').vectorMap('get', 'mapObject');
         var regionName = mapObj.getRegionName(code);
         var x;
-        for (var i in data.country) {
-        if(regionName === data.country[i].name){
-          var x = data.country[i].points;
-        }
-      };
-       label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"13px\""><br>This country is worth ' + x + ' points.');   
-       //label.html('');    
+        var selected = map.regions[code].element.isSelected;
+        if(map.regions[code].element.isSelected){
+          for (var i in data.country) {
+            if(regionName === data.country[i].name){
+              var x = data.country[i].points;
+            }
+          };
+         label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"13px\""> -- ' + regionName + '<br>This country is worth ' + x + ' points.');   
+       }else{
+          for (var i in data.country) {
+            if(regionName === data.country[i].name){
+              var x = data.country[i].points;
+            }
+          };
+         label.html('This country is worth ' + x + ' points.');
+       }   
      },
       onRegionClick: function(event, code){
-        $.getJSON('../maps/' + mapString + '.json', function( data ) {
-          askQuestionOnClick(data, code);
-        });      
+        if(!map.regions[code].element.isSelected){
+          $.getJSON('../maps/' + mapString + '.json', function( data ) {
+            askQuestionOnClick(data, code);
+          }); 
+        }else{
+          alert("Already selected.");
+          event.preventDefault();
+        }     
       },
     });
   });
