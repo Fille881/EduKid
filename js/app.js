@@ -107,16 +107,18 @@ function customLabel(selected, data, regionName, mapObj, label, code){
   if(selected === true){
     for (var i in data.country) {
       if(regionName === data.country[i].name){
-        var x = data.country[i].points;
+        var pts = data.country[i].points;
       }
     };
-   label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"13px\""> -- ' + regionName + '<br>This country is worth ' + x + ' points.');   
+   label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"13px\""> -- ' + regionName + '<br>This country is worth <span>' + pts + '</span> points.');   
  }else{
     for (var i in data.country) {
       if(regionName === data.country[i].name){
-        var x = data.country[i].points;
+        var pts = data.country[i].points;
+        var pop = data.country[i].population;
+        var area = data.country[i].area;
       }
     };
-   label.html('This country is worth ' + x + ' points.');
+   label.html('Population: ' + pop + '<br>Area: ' + area +' km<sup>2</sup><br>This country is worth <span>' + pts + '</span> points.');
  }   
 }
