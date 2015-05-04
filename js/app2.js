@@ -26,8 +26,8 @@ function loadMap(mapString){
           var x = data.country[i].points;
         }
       };
-       label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"11px\""><br>This country is worth ' + x + ' points.');   
-       //label.html('');    
+       label.html('<img src=\"../img/flags/squareflags/'+ name + '.png\" width=\"16px\" height=\"11px\""><br>This country is worth ' + x + ' points.');  
+        //.css("background-image", "url(../img/flags/squareflags"+ name +".png)");   
      },
       onRegionClick: function(event, code){
         $.getJSON('../maps/' + mapString + '.json', function( data ) {
