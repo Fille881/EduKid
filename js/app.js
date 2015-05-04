@@ -6,6 +6,7 @@ $(document).ready(function() {
 });
 
 var points = parseInt('0');
+var countryTries = {};
 
 function loadMap(mapString){
   $.getJSON('../maps/' + mapString + '.json', function( data ) {
@@ -75,7 +76,13 @@ function askQuestionOnClick(data, code){
   var mapObj = $('#map').vectorMap('get', 'mapObject');
   var regionName = mapObj.getRegionName(code);
   var audio = $("#" + regionName)[0];
-  var counter = 0;
+  	if (typeof countryTries[regionName] === "undefined"){
+	  	 var counter = 0;
+  	}
+  	else{
+	  	counter = countryTries[regionName]
+  	}
+ 
   for (var i in data.country) {
 	var currentCode = data.country[i].code;
     if(regionName === data.country[i].name){
@@ -98,6 +105,8 @@ function askQuestionOnClick(data, code){
           }else{
             console.log("Please try again.");
             counter ++;
+            countryTries[regionName] = counter;
+            console.log(countryTries)
             console.log(counter);
             if(counter === 3){
               console.log("That was your last try. Game over!");
