@@ -147,7 +147,7 @@ function customLabel(selected, data, regionName, mapObj, label, code){
         var area = data.country[i].area;
       }
     };
-   label.html('Population: ' + pop + '<br>Area: ' + area + 
+   label.html('Population: ' + pop.toLocaleString() + '<br>Area: ' + area.toLocaleString() + 
     ' km<sup>2</sup><br>This country is worth <span>' + pts + '</span> points.');
  }   
 }
