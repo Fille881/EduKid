@@ -74,6 +74,7 @@ function deselectCountry(code){
 function askQuestionOnClick(data, code){
   var mapObj = $('#map').vectorMap('get', 'mapObject');
   var regionName = mapObj.getRegionName(code);
+  var audio = $("#" + regionName)[0];
   var counter = 0;
   for (var i in data.country) {
 	var currentCode = data.country[i].code;
@@ -92,7 +93,7 @@ function askQuestionOnClick(data, code){
             counter = 3;
             points = points + parseInt(data.country[i].points);
             $('#points').text("You've got" + " " + points + " " +"points");
-           
+            audio.play();
             
           }else{
             console.log("Please try again.");
