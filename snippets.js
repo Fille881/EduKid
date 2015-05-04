@@ -5,3 +5,6 @@ map.getSelectedRegions(code).indexOf(code)
 
 //info on generating geoJSON files from shapefiles
 stackoverflow.com/a/17267249/1205706
+
+//changing background image of elemement with x class or id 
+$('.jvectormap-tip').css("background-image", "url(../img/flags/squareflags/"+ name +".png)");
