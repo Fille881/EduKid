@@ -30,7 +30,7 @@ function loadMap(mapString){
         var mapObj = $('#map').vectorMap('get', 'mapObject');
         var regionName = mapObj.getRegionName(code);
         var selected = map.regions[code].element.isSelected;
-        customLabel(selected, data, regionName, mapObj, label, code);   
+        customLabel(selected, data, regionName, mapObj, label, code);
      },
       onRegionClick: function(event, code){
         if(!map.regions[code].element.isSelected){
@@ -79,20 +79,28 @@ function askQuestionOnClick(data, code){
 	var currentCode = data.country[i].code;
     if(regionName === data.country[i].name){
       while (counter < 3){
-        var answer = prompt("Attempt for " + data.country[i].name + ": >>" + (counter+1) + "<<. Question for " + regionName + ": " + data.country[i].question);      
-        if(data.country[i].answer === answer){
-          console.log("Correct!" + data.country[i].points);
-          mapObj.setSelectedRegions(code);
-          counter = 3;
-          points = points + parseInt(data.country[i].points);
-          $('#points').text("You've got" + " " + points + " " +"points");
+        var answer = prompt("Attempt for " + data.country[i].name + 
+          ": >>" + (counter+1) + "<<. Question for " + regionName + 
+          ": " + data.country[i].question);      
+        if (answer === null || answer === false){
+          deselectCountry(code);
+          break;
         }else{
-          console.log("Please try again.");
-          counter ++;
-          console.log(counter);
-          if(counter === 3){
-            console.log("That was your last try. Game over!");
-            deselectCountry(code);   
+          if(data.country[i].answer === answer){
+            addMarker(code);
+            console.log("Correct!" + data.country[i].points);
+            mapObj.setSelectedRegions(code);
+            counter = 3;
+            points = points + parseInt(data.country[i].points);
+            $('#points').text("You've got" + " " + points + " " +"points");
+          }else{
+            console.log("Please try again.");
+            counter ++;
+            console.log(counter);
+            if(counter === 3){
+              console.log("That was your last try. Game over!");
+              deselectCountry(code);   
+            }
           }
         }
       }
@@ -110,7 +118,7 @@ function customLabel(selected, data, regionName, mapObj, label, code){
         var pts = data.country[i].points;
       }
     };
-   label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"16px\" height=\"13px\""> -- ' + regionName + '<br>This country is worth <span>' + pts + '</span> points.');   
+   label.html('<img src=\"../img/flags/'+ code + '.png\" width=\"25px\" height=\"22px\""> -- ' + regionName + '<br>This country is worth <span>' + pts + '</span> points.');   
  }else{
     for (var i in data.country) {
       if(regionName === data.country[i].name){
