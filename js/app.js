@@ -87,12 +87,13 @@ function askQuestionOnClick(data, code){
           break;
         }else{
           if(data.country[i].answer === answer){
-            addMarker(code);
             console.log("Correct!" + data.country[i].points);
             mapObj.setSelectedRegions(code);
             counter = 3;
             points = points + parseInt(data.country[i].points);
             $('#points').text("You've got" + " " + points + " " +"points");
+           
+            
           }else{
             console.log("Please try again.");
             counter ++;
