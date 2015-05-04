@@ -32,7 +32,7 @@ function loadMap(mapString){
         var selected = map.regions[code].element.isSelected;
         customLabel(selected, data, regionName, mapObj, label, code);
      },
-      onRegionClick: function(event, code){
+      onRegionClick: function(event, code){       
         if(!map.regions[code].element.isSelected){
           $.getJSON('../maps/' + mapString + '.json', function( data ) {
             askQuestionOnClick(data, code);
