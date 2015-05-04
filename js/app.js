@@ -7,6 +7,7 @@ $(document).ready(function() {
 
 var points = parseInt('0');
 var attempted = [];
+var countryTries = {};
 
 function loadMap(mapString){
   $.getJSON('../maps/' + mapString + '.json', function( data ) {
@@ -80,7 +81,14 @@ function deselectCountry(code){
 function askQuestionOnClick(data, code){
   var mapObj = $('#map').vectorMap('get', 'mapObject');
   var regionName = mapObj.getRegionName(code);
-  var counter = 0;
+  var audio = $("#" + regionName)[0];
+  	if (typeof countryTries[regionName] === "undefined"){
+	  	 var counter = 0;
+  	}
+  	else{
+	  	counter = countryTries[regionName]
+  	}
+ 
   for (var i in data.country) {
 	var currentCode = data.country[i].code;
     if(regionName === data.country[i].name){
@@ -92,20 +100,24 @@ function askQuestionOnClick(data, code){
           deselectCountry(code);
           break;
         }else{
-          if(data.country[i].answer === answer){         
-          console.log("Correct! You win " + data.country[i].points + " points.");
-          mapObj.setSelectedRegions(code);
-          counter = 3;
-          points = points + parseInt(data.country[i].points);
-          $('#points').text("You've got" + " " + points + " " +"points");
-        }else{
-          console.log("Please try again.");
-          counter ++;
-          if(counter === 3){
-            console.log("That was your last try. Game over!");
-            deselectCountry(code);
-            attempted.push(code);
-            console.log("Attempted: " + attempted);
+          if(data.country[i].answer === answer){
+            console.log("Correct!" + data.country[i].points);
+            mapObj.setSelectedRegions(code);
+            counter = 3;
+            points = points + parseInt(data.country[i].points);
+            $('#points').text("You've got" + " " + points + " " +"points");
+            audio.play();
+            
+          }else{
+            console.log("Please try again.");
+            counter ++;
+            countryTries[regionName] = counter;
+            console.log(countryTries)
+            console.log(counter);
+            if(counter === 3){
+              console.log("That was your last try. Game over!");
+              deselectCountry(code);   
+            }
           }
         }
         }

@@ -27,7 +27,7 @@ function loadMap(mapString){
         }
       };
        label.html('<img src=\"../img/flags/squareflags/'+ name + '.png\" width=\"16px\" height=\"11px\""><br>This country is worth ' + x + ' points.');  
-        //.css("background-image", "url(../img/flags/squareflags"+ name +".png)");   
+           
      },
       onRegionClick: function(event, code){
         $.getJSON('../maps/' + mapString + '.json', function( data ) {
