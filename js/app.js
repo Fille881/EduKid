@@ -82,13 +82,13 @@ function askQuestionOnClick(data, code){
   var mapObj = $('#map').vectorMap('get', 'mapObject');
   var regionName = mapObj.getRegionName(code);
   var audio = $("#" + regionName)[0];
-  	if (typeof countryTries[regionName] === "undefined"){
+  	if (!countryTries[regionName]){
 	  	 var counter = 0;
   	}
   	else{
-	  	counter = countryTries[regionName]
-  	}
- 
+	  	counter = countryTries[regionName];
+      console.log(counter);
+  	} 
   for (var i in data.country) {
 	var currentCode = data.country[i].code;
     if(regionName === data.country[i].name){
@@ -106,20 +106,20 @@ function askQuestionOnClick(data, code){
             counter = 3;
             points = points + parseInt(data.country[i].points);
             $('#points').text("You've got" + " " + points + " " +"points");
-            audio.play();
-            
+            audio.play();            
           }else{
             console.log("Please try again.");
             counter ++;
             countryTries[regionName] = counter;
-            console.log(countryTries)
+            console.log(countryTries);
             console.log(counter);
             if(counter === 3){
+              deselectCountry(code);
               console.log("That was your last try. Game over!");
-              deselectCountry(code);   
+              attempted.push(code);          
+
             }
           }
-        }
         }
       }
     }
@@ -150,8 +150,4 @@ function customLabel(selected, data, regionName, mapObj, label, code){
    label.html('Population: ' + pop + '<br>Area: ' + area + 
     ' km<sup>2</sup><br>This country is worth <span>' + pts + '</span> points.');
  }   
-}
-
-function answerValidation(i, code, data, answer, mapObj, counter){
-  
 }
