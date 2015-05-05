@@ -19,9 +19,8 @@ $(document).ready(function() {
   resizeMap();
   $(window).resize(resizeMap);
   localStorage.clear();
-   // Initialize the tour
+  // Initialize the tour
   tour.init();
-
   // Start the tour
   tour.start();
 });
