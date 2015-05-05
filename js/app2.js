@@ -5,6 +5,7 @@ app.settings = {
 app.countries = {}; // This will hold the json map-data
 app.points = 0;
 app.map = {}; // Will hold the map plugin
+app.tries = {};
 
 
 // When the browser has finished loading
@@ -32,10 +33,8 @@ function loadMap() {
         markersSelectable: true,
         selectedRegions: [getRandomCountryCode(data)],
         onRegionTipShow: function(event, label, code) {
-          //var mapObj = $('#map').vectorMap('get', 'mapObject');
           var regionName = app.map.getRegionName(code);
-          var  countrypoints;
-          console.log("Region name:", app.map.getRegionName(code));
+          var countrypoints;
 
           app.countries.forEach(function(country) {
             if (regionName === country.name) {
@@ -50,7 +49,16 @@ function loadMap() {
 
        },
         onRegionClick: function(event, code){
-          askQuestionOnClick(code);
+          var tries = app.tries[app.map.getRegionName(code)];
+          var regionName = app.map.getRegionName(code);
+          if(tries === undefined || tries < 2){
+            askQuestionOnClick(code);
+          }else{
+            swal(regionName, "Out of tries!", "error");
+            deselectCountry(code);
+          }
+          
+          
         },
 
       }); // new jvm.Map
@@ -77,13 +85,25 @@ function resizeMap(){
 //Ask question and validates answer
 function askQuestionOnClick(code){
   'use strict';
-  //var mapObj = $('#map').vectorMap('get', 'mapObject');
   var regionName = app.map.getRegionName(code);
-  //var counter = 0;
-  swalPrompt(regionName);
+  swalPrompt(regionName, code);
 }
 
-function swalPrompt(regionName){
+//deselects clicked on region, used when answer is false. 
+//Explanation: if regions isSelected, create an object "o", 
+//add to it property "code"(dynamic value, current country code) with value "false"
+//call setSelectedRegions with that property: value key
+function deselectCountry(code){
+console.log(code) 
+  if(app.map.regions[code].element.isSelected) {
+      console.log("Auto-deselecting: " + code); 
+      var o = {};
+      o[code] = false;  
+      app.map.setSelectedRegions(o);
+  } 
+}
+
+function swalPrompt(regionName, code){
   'use strict';
     var currentAnswer;
 
@@ -91,6 +111,13 @@ function swalPrompt(regionName){
     var country = app.countries.filter(function(country) {
       return country.name == regionName;
     })[0]; // Get the first element, it will only be one
+    if (!app.tries[country.name]){
+       var counter = 0;
+    }
+    else{
+      counter = app.tries[country.name];
+      console.log(counter);
+    } 
 
     if (country) {
       swal({
@@ -103,22 +130,63 @@ function swalPrompt(regionName){
         inputPlaceholder: "Write your answer"
         },
         function(inputValue){ // Called when we press "Ok"
-          if (inputValue === false) return false;
+          if (inputValue === false) {
+            deselectCountry(code);
+            return false;
+          }
           if (inputValue === "") {
             swal.showInputError("You need to write something!");
             return false;
           }
-          if (inputValue == country.answer){
+          if(inputValue === country.answer && counter < 3){
+            console.log("Correct answer.");
+            swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
+              app.points = app.points + parseInt(country.points);
+            $('#points').text("You've got" + " " + app.points + " " +"points");
+          }else if(inputValue != country.answer && counter < 2){
+            swal.showInputError("Incorrect answer! " + (2 - counter) + " tries left.");
+            counter++;
+            app.tries[country.name] = counter;
+            console.log(app.tries);
+            console.log(counter);
+          }else if(counter === 2){
+            swal("No tries left!", "error");
+            deselectCountry(code);
+          }
+
+
+/*
+
+
+          if(inputValue != country.answer && counter < 3){
+            swal.showInputError("Incorrect answer! " + (3 - counter) + " tries left.");
+            counter++;
+            app.tries[country.name] = counter;
+            console.log(app.tries);
+            console.log(counter);
+          }else if(inputValue === country.answer){
             console.log("Correct answer.");
             swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
               app.points = app.points + parseInt(country.points);
 
             $('#points').text("You've got" + " " + app.points + " " +"points");
-
           }else{
-            swal("Incorrect answer!", "error");
+            swal("No tries left!", "error");
+            deselectCountry(code);
+          }*/
+          
+           /* if (inputValue == country.answer){
+              console.log("Correct answer.");
+              swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
+                app.points = app.points + parseInt(country.points);
+
+              $('#points').text("You've got" + " " + app.points + " " +"points");
+
+            }else{
+            //swal("Incorrect answer!", "error");
+            //deselectCountry(code);
             console.log("Incorrect answer.", inputValue);
-          }
-      }); //swal
+          }*/
+      });//swal
     }
 }
