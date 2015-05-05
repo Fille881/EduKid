@@ -1,6 +1,6 @@
 var app = {}; // Our single global variable, that holds useful things! =)
 app.settings = {
-  mapname: 'world_mill_en',
+  mapname: 'europe_mill_en',
 };
 app.countries = {}; // This will hold the json map-data
 app.points = 0;
@@ -12,7 +12,6 @@ app.map = {}; // Will hold the map plugin
 $(document).ready(function() {
   'use strict';
   console.log("Good day, we are running!");
-
   // Let us start up this application
   loadMap();
 
@@ -23,7 +22,6 @@ function loadMap() {
   'use strict';
   $.getJSON('../maps/' + app.settings.mapname + '.json', function( data ) {
       app.countries = data.country; // Store the json-data in our app-object, so we can use it everywhere
-
       app.map = new jvm.Map({
         container: $('#map'),
         map: app.settings.mapname,
@@ -32,15 +30,14 @@ function loadMap() {
         markersSelectable: true,
         selectedRegions: [getRandomCountryCode(data)],
         onRegionTipShow: function(event, label, code) {
-          var mapObj = $('#map').vectorMap('get', 'mapObject');
-          var regionName = mapObj.getRegionName(code);
+          //var mapObj = $('#map').vectorMap('get', 'mapObject');
+          var regionName = app.map.getRegionName(code);
           var  countrypoints;
-          console.log("Region name:", regionName);
+          console.log("Region name:", app.map.getRegionName(code));
 
-          data.country.forEach(function(country) {
+          app.countries.forEach(function(country) {
             if (regionName === country.name) {
-              //countrypoints = data.country[i].points;
-              countrypoints = 5; // Tmp
+              countrypoints = country.points;
             }
           });
 
@@ -69,8 +66,8 @@ function getRandomCountryCode(){
 //Ask question and validates answer
 function askQuestionOnClick(code){
   'use strict';
-  var mapObj = $('#map').vectorMap('get', 'mapObject');
-  var regionName = mapObj.getRegionName(code);
+  //var mapObj = $('#map').vectorMap('get', 'mapObject');
+  var regionName = app.map.getRegionName(code);
   //var counter = 0;
   swalPrompt(regionName);
 }
@@ -102,17 +99,13 @@ function swalPrompt(regionName){
           }
           if (inputValue == country.answer){
             console.log("Correct answer.");
-            swal("Nice!", "You wrote: " + inputValue, + "success" + app.countries[i].points);
-            if(country.points) {
-              app.points = app.points + parseInt(app.countries[i].points);
-            } else {
-              app.points = app.points + 5;
-            }
+            swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
+              app.points = app.points + parseInt(country.points);
 
-
-            $('#points').text("You've got" + " " + points + " " +"points");
+            $('#points').text("You've got" + " " + app.points + " " +"points");
 
           }else{
+            swal("Incorrect answer!", "error");
             console.log("Incorrect answer.", inputValue);
           }
       }); //swal
