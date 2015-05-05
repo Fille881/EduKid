@@ -14,10 +14,16 @@ $(document).ready(function() {
   console.log("Good day, we are running!");
   // Let us start up this application
   
+
+  
   loadMap();
   resizeMap();
   $(window).resize(resizeMap);
-  
+  localStorage.clear();
+  // Initialize the tour
+  tour.init();
+  // Start the tour
+  tour.start();
 });
 
 // Fetches json-data for map and starts the jquery map plugin
@@ -31,6 +37,14 @@ function loadMap() {
         backgroundColor: ['#1E90FF'],
         regionsSelectable: true,
         markersSelectable: true,
+        series: {
+	        regions:[{
+		        values: {
+			        
+		        },
+		        attribute: 'fill'
+	        }]
+        },
         selectedRegions: [getRandomCountryCode(data)],
         onRegionTipShow: function(event, label, code) {
           var regionName = app.map.getRegionName(code);
@@ -74,11 +88,8 @@ function getRandomCountryCode(){
 }
 
 function resizeMap(){
-  var docheight = $(window).height(); // returns height of the window
-  var docwidth = $(window).width(); // returns width of the window
-	
-  $("#map").width(docwidth);
-  $("#map").height(docheight);
+  $("#map").width($(window).width());
+  $("#map").height($(window).height());
   
 }
 
@@ -141,8 +152,14 @@ function swalPrompt(regionName, code){
           if(inputValue === country.answer && counter < 3){
             console.log("Correct answer.");
             swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
-              app.points = app.points + parseInt(country.points);
+            app.points = app.points + parseInt(country.points);
             $('#points').text("You've got" + " " + app.points + " " +"points");
+            var color = country.code;
+            console.log(color);           
+         //app.map.regions[0].element.style.selected.fill = '#FFFFF';
+           var colorcountry = {};
+           colorcountry[country.code] = '#FFFFF';
+       app.map.series.regions[0].setValues(colorcountry);
           }else if(inputValue != country.answer && counter < 2){
             swal.showInputError("Incorrect answer! " + (2 - counter) + " tries left.");
             counter++;
@@ -153,40 +170,27 @@ function swalPrompt(regionName, code){
             swal("No tries left!", "error");
             deselectCountry(code);
           }
-
-
-/*
-
-
-          if(inputValue != country.answer && counter < 3){
-            swal.showInputError("Incorrect answer! " + (3 - counter) + " tries left.");
-            counter++;
-            app.tries[country.name] = counter;
-            console.log(app.tries);
-            console.log(counter);
-          }else if(inputValue === country.answer){
-            console.log("Correct answer.");
-            swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
-              app.points = app.points + parseInt(country.points);
-
-            $('#points').text("You've got" + " " + app.points + " " +"points");
-          }else{
-            swal("No tries left!", "error");
-            deselectCountry(code);
-          }*/
-          
-           /* if (inputValue == country.answer){
-              console.log("Correct answer.");
-              swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
-                app.points = app.points + parseInt(country.points);
-
-              $('#points').text("You've got" + " " + app.points + " " +"points");
-
-            }else{
-            //swal("Incorrect answer!", "error");
-            //deselectCountry(code);
-            console.log("Incorrect answer.", inputValue);
-          }*/
-      });//swal
+      });
     }
 }
+
+
+// Instance the tour
+var tour = new Tour({
+  steps: [
+  {
+    //path: "europe.html",
+    element: "#map",
+    title: "This is a map",
+    content: "In the game of maps you win or you die"
+  },
+  {
+    element: "#points",
+    title: "These are your points",
+    content: "Points are good"
+  }
+
+]});
+
+
+

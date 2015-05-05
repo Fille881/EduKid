@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>jVectorMap demo</title>
+  <title>Map Game</title>
   <link rel="stylesheet" href="jquery-jvectormap-2.0.2.css" type="text/css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="../plugin/dist/sweetalert.css">
   <link rel="stylesheet" type="text/css" href="../css/appcss.css">
+  <link href="../css/bootstrap-tour.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  
   <audio id="Spain" preload="auto"> <source src="../Spain.mp3"></source></audio>
   <script src="../plugin/dist/sweetalert.min.js"></script>
   <script src="jquery-1.11.2.min.js"></script>
   <script src="jquery-jvectormap-2.0.2.min.js"></script>
-  <script src="jquery-jvectormap-europe-mill-en.js"></script> 
+  <script src="jquery-jvectormap-europe-mill-en.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="../js/bootstrap-tour.min.js"></script>
   <script src="../js/app2.js"></script>
 </head>
 <body>
 <div class="container">
 	<div class="row">
-		<div class="col-md-3 bg-danger" id="points">
+		<div class="col-md-3 bg-danger" id="player1">
 			
 		</div>
-		<div class="col-md-9 bg-info" id="countryPoints">
+		<div class="col-md-6 bg-info" id="countryPoints">
+			
+		</div>
+		<div class="col-md-3 bg-danger" id="player2">
 			
 		</div>
 	</div>
 	
 	<div class="row bg-info"> 
 		<div class="col-md-12" id="map" style="width: 1200px; height: 800px">
-			<!--<button type="button" class="btn btn-primary remove-all-marker">Reset markers</button>-->
-			
+			<!--<button type="button" class="btn btn-primary remove-all-marker">Reset markers</button>-->			
 		</div>
 	 </div>
-	 
 </div>
 </body>
 </html>
