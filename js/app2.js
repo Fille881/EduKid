@@ -12,18 +12,15 @@ app.tries = {};
 $(document).ready(function() {
   'use strict';
   console.log("Good day, we are running!");
-  // Let us start up this application
-  
-
-  
+  // Let us start up this application  
   loadMap();
   resizeMap();
   $(window).resize(resizeMap);
   localStorage.clear();
   // Initialize the tour
-  tour.init();
+  //tour.init();
   // Start the tour
-  tour.start();
+  //tour.start();
 });
 
 // Fetches json-data for map and starts the jquery map plugin
@@ -65,11 +62,16 @@ function loadMap() {
         onRegionClick: function(event, code){
           var tries = app.tries[app.map.getRegionName(code)];
           var regionName = app.map.getRegionName(code);
-          if(tries === undefined || tries < 2){
-            askQuestionOnClick(code);
+          if(!app.map.regions[code].element.isSelected){
+            if(tries === undefined || tries < 2){
+              askQuestionOnClick(code);
+            }else{
+              swal(regionName, "Out of tries!", "error");
+              deselectCountry(code);
+            }
           }else{
-            swal(regionName, "Out of tries!", "error");
-            deselectCountry(code);
+            swal("Already selected!");
+            //event.preventDefault();
           }
           
           
@@ -87,6 +89,7 @@ function getRandomCountryCode(){
   return app.countries[random_id].code;
 }
 
+//responsive map resize
 function resizeMap(){
   $("#map").width($(window).width());
   $("#map").height($(window).height());
@@ -153,25 +156,26 @@ function swalPrompt(regionName, code){
             console.log("Correct answer.");
             swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
             app.points = app.points + parseInt(country.points);
-            $('#points').text("You've got" + " " + app.points + " " +"points");
-            var color = country.code;
-            console.log(color);           
-         //app.map.regions[0].element.style.selected.fill = '#FFFFF';
-           var colorcountry = {};
-           colorcountry[country.code] = '#FFFFF';
-       app.map.series.regions[0].setValues(colorcountry);
+            $('#points').text("You've got" + " " + app.points + " " +"points");          
+            //app.map.regions[0].element.style.selected.fill = '#FFFFF';
+            regionColorOnAnswer(country, '#9CCB19');
           }else if(inputValue != country.answer && counter < 2){
             swal.showInputError("Incorrect answer! " + (2 - counter) + " tries left.");
             counter++;
             app.tries[country.name] = counter;
-            console.log(app.tries);
-            console.log(counter);
           }else if(counter === 2){
-            swal("No tries left!", "error");
-            deselectCountry(code);
+            swal("No tries left!", "error");  
+            regionColorOnAnswer(country, '#F2473F');
           }
       });
     }
+}
+
+//colors the region. pass the color (hex or word) as an argument
+function regionColorOnAnswer(country, color){
+  var colorcountry = {};
+  colorcountry[country.code] = color;
+  app.map.series.regions[0].setValues(colorcountry);
 }
 
 

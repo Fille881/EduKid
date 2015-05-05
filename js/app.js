@@ -116,7 +116,7 @@ function askQuestionOnClick(data, code){
             if(counter === 3){
               deselectCountry(code);
               console.log("That was your last try. Game over!");
-              attempted.push(code);          
+              attempted.push(code);      
 
             }
           }
