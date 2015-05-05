@@ -66,11 +66,8 @@ function getRandomCountryCode(){
 }
 
 function resizeMap(){
-  var docheight = $(window).height(); // returns height of the window
-  var docwidth = $(window).width(); // returns width of the window
-	
-  $("#map").width(docwidth);
-  $("#map").height(docheight);
+  $("#map").width($(window).width());
+  $("#map").height($(window).height());
   
 }
 
