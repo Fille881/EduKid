@@ -13,10 +13,16 @@ $(document).ready(function() {
   console.log("Good day, we are running!");
   // Let us start up this application
   
+
+  
   loadMap();
   resizeMap();
   $(window).resize(resizeMap);
-  
+  localStorage.clear();
+  // Initialize the tour
+  tour.init();
+  // Start the tour
+  tour.start();
 });
 
 // Fetches json-data for map and starts the jquery map plugin
@@ -74,11 +80,8 @@ function getRandomCountryCode(){
 }
 
 function resizeMap(){
-  var docheight = $(window).height(); // returns height of the window
-  var docwidth = $(window).width(); // returns width of the window
-	
-  $("#map").width(docwidth);
-  $("#map").height(docheight);
+  $("#map").width($(window).width());
+  $("#map").height($(window).height());
   
 }
 
@@ -140,6 +143,24 @@ function swalPrompt(regionName){
       }); //swal
     }
 }
+
+
+// Instance the tour
+var tour = new Tour({
+  steps: [
+  {
+    //path: "europe.html",
+    element: "#map",
+    title: "This is a map",
+    content: "In the game of maps you win or you die"
+  },
+  {
+    element: "#points",
+    title: "These are your points",
+    content: "Points are good"
+  }
+
+]});
 
 
 
