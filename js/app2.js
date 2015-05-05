@@ -30,6 +30,14 @@ function loadMap() {
         backgroundColor: ['#1E90FF'],
         regionsSelectable: true,
         markersSelectable: true,
+        series: {
+	        regions:[{
+		        values: {
+			        
+		        },
+		        attribute: 'fill'
+	        }]
+        },
         selectedRegions: [getRandomCountryCode(data)],
         onRegionTipShow: function(event, label, code) {
           //var mapObj = $('#map').vectorMap('get', 'mapObject');
@@ -113,7 +121,17 @@ function swalPrompt(regionName){
             swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
               app.points = app.points + parseInt(country.points);
 
-            $('#points').text("You've got" + " " + app.points + " " +"points");
+            $('#player1').text("You've got" + " " + app.points + " " +"points");
+           
+           var color = country.code;
+           console.log(color);
+           
+           //app.map.regions[0].element.style.selected.fill = '#FFFFF';
+           var colorcountry = {};
+           colorcountry[country.code] = '#FFFFF';
+		   app.map.series.regions[0].setValues(colorcountry);
+           
+           
 
           }else{
             swal("Incorrect answer!", "error");
@@ -122,3 +140,6 @@ function swalPrompt(regionName){
       }); //swal
     }
 }
+
+
+
