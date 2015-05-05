@@ -7,15 +7,17 @@ app.points = 0;
 app.map = {}; // Will hold the map plugin
 
 
-
 // When the browser has finished loading
 $(document).ready(function() {
   'use strict';
   console.log("Good day, we are running!");
 
   // Let us start up this application
+  
   loadMap();
-
+  resizeMap();
+  $(window).resize(resizeMap);
+  
 });
 
 // Fetches json-data for map and starts the jquery map plugin
@@ -64,6 +66,15 @@ function getRandomCountryCode(){
   'use strict';
   var random_id = Math.floor(Math.random()*app.countries.length);
   return app.countries[random_id].code;
+}
+
+function resizeMap(){
+  var docheight = $(window).height(); // returns height of the window
+  var docwidth = $(window).width(); // returns width of the window
+	
+  $("#map").width(docwidth);
+  $("#map").height(docheight);
+  
 }
 
 //Ask question and validates answer
