@@ -162,7 +162,9 @@ function swalPrompt(regionName, code){
           }else if(inputValue != country.answer && counter < 2){
             swal.showInputError("Incorrect answer! " + (2 - counter) + " tries left.");
             counter++;
+            console.log(counter);
             app.tries[country.name] = counter;
+            regionColorOnAnswer(country, 'orange');
           }else if(counter === 2){
             swal("No tries left!", "error");  
             regionColorOnAnswer(country, '#F2473F');
