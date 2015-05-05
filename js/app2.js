@@ -1,6 +1,6 @@
 var app = {}; // Our single global variable, that holds useful things! =)
 app.settings = {
-  mapname: 'world_mill_en',
+  mapname: 'europe_mill_en',
 };
 app.countries = {}; // This will hold the json map-data
 app.points = 0;
@@ -39,8 +39,8 @@ function loadMap() {
 
           data.country.forEach(function(country) {
             if (regionName === country.name) {
-              //countrypoints = data.country[i].points;
-              countrypoints = 5; // Tmp
+              countrypoints = country.points
+              
             }
           });
 
@@ -102,15 +102,16 @@ function swalPrompt(regionName){
           }
           if (inputValue == country.answer){
             console.log("Correct answer.");
-            swal("Nice!", "You wrote: " + inputValue, + "success" + app.countries[i].points);
+            swal("Nice!", "You wrote: " + inputValue, + "success" + app.countries.points);
             if(country.points) {
-              app.points = app.points + parseInt(app.countries[i].points);
+              app.points = app.points + parseInt(country.points);
+              console.log(app.points);
             } else {
               app.points = app.points + 5;
             }
 
 
-            $('#points').text("You've got" + " " + points + " " +"points");
+            $('#points').text("You've got" + " " + app.points + " " +"points");
 
           }else{
             console.log("Incorrect answer.", inputValue);
