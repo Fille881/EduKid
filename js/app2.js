@@ -163,9 +163,7 @@ function swalPrompt(regionName, code){
             console.log("Correct answer.");
             swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
             app.points = app.points + parseInt(country.points);
-            $('#points').text("You've got" + " " + app.points + " " +"points");          
-            //app.map.regions[0].element.style.selected.fill = '#FFFFF';
-            if ()
+            $('#points').text("You've got" + " " + app.points + " " +"points");         
             regionColorOnAnswer(country, '#9CCB19');
             counter++;
             app.tries[country.name] = counter;
@@ -181,7 +179,7 @@ function swalPrompt(regionName, code){
             app.tries[country.name] = counter;
             swal("No tries left!", "error");  
             regionColorOnAnswer(country, '#F2473F');
-            playerCounter ++;
+            playerCounter++;
             playerSelected(playerCounter);
           }
       });
