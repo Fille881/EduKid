@@ -1,6 +1,7 @@
 var app = {}; // Our single global variable, that holds useful things! =)
 app.settings = {
   mapname: 'europe_mill_en',
+  bgcolor: '#ccccff',
 };
 app.countries = {}; // This will hold the json map-data
 app.pointsP1 = 0;
@@ -13,6 +14,7 @@ app.pointsToDiv;
 app.player1Countries = []; //holds countries
 app.player2Countries = [];
 app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#FFFFF'];
+app.iniBG;
 
 // When the browser has finished loading
 $(document).ready(function() {
@@ -28,6 +30,7 @@ $(document).ready(function() {
   //tour.init();
   // Start the tour
   //tour.start();
+  
  
 });
 
@@ -39,9 +42,15 @@ function loadMap() {
       app.map = new jvm.Map({
         container: $('#map'),
         map: app.settings.mapname,
-        backgroundColor: ['#1E90FF'],
+        backgroundColor: app.settings.bgcolor,
+        zoomButtons : false,
         regionsSelectable: true,
-        markersSelectable: true, 
+        markersSelectable: true,
+        regionStyle: {
+          initial:{
+            fill: "white",
+          }
+        },
         series: {
 	        regions:[{
 		        values: {
@@ -101,7 +110,7 @@ function getRandomCountryCode(){
 
 //responsive map resize
 function resizeMap(){
-  $("#map").width($(window).width());
+  $("#main").width($(window).width());
   $("#map").height($(window).height());
   
 }
@@ -168,12 +177,12 @@ function swalPrompt(regionName, code){
             
             if (app.pointsToDiv == "player1"){
 	            app.pointsP1 = app.pointsP1 + parseInt(country.points);
-				$('#' + app.pointsToDiv).text("You've got" + " " + app.pointsP1 + " " +"points"); 
+				$('#' + app.pointsToDiv).text("Player 1: " + " " + app.pointsP1 + " " +"points"); 
 				
 	            }
 	            else{
 		            app.pointsP2 = app.pointsP2 + parseInt(country.points);
-					$('#' + app.pointsToDiv).text("You've got" + " " + app.pointsP2 + " " +"points"); 	
+					$('#' + app.pointsToDiv).text("Player 2: " + " " + app.pointsP2 + " " +"points"); 	
 	            }
             
             	if (app.pointsToDiv == "player1"){
@@ -201,13 +210,18 @@ function swalPrompt(regionName, code){
             swal("No tries left!", "error");  
             app.playerCounter++;
             playerSelected(app.playerCounter);
-            
+            if(app.playerCounter % 2 === 0){
+              app.settings.bgcolor = "red";
+              console.log(app.settings.bgcolor);
+            }else{
+              app.settings.bgcolor = "yellow";
+              console.log(app.settings.bgcolor);
+            }
             if (app.pointsToDiv == "player1"){
-	            	regionColorOnAnswer(country, app.palette[2]);
-            		}
-            		else{
-	            		regionColorOnAnswer(country, app.palette[5]);
-            			}
+	            regionColorOnAnswer(country, app.palette[2]);
+            }else{
+          		regionColorOnAnswer(country, app.palette[5]);
+        		}
           }
       });
     }
@@ -224,13 +238,13 @@ function regionColorOnAnswer(country, color){
 function playerSelected(playerCounter){
 
 	if (playerCounter % 2 == 0){
-		$('#'+ app.playerTurn[0]).css('background-color', 'blue');
-		$('#'+ app.playerTurn[1]).css('background-color', '');
+		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'600'});
+		$('#'+ app.playerTurn[1]).css({'background-color': 'lavenderblush','font-weight':'100'});
 		app.pointsToDiv = app.playerTurn[0];	
 	}
 	else{
-		$('#'+ app.playerTurn[0]).css('background-color', '');
-		$('#'+ app.playerTurn[1]).css('background-color', 'red');
+		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'100'});
+		$('#'+ app.playerTurn[1]).css({'background-color': 'lavenderblush','font-weight':'600'});
 		app.pointsToDiv = app.playerTurn[1];			
 	}
 }
