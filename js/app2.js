@@ -62,24 +62,23 @@ function loadMap() {
         onRegionClick: function(event, code){
           var tries = app.tries[app.map.getRegionName(code)];
           var regionName = app.map.getRegionName(code);
-          if(!app.map.regions[code].element.isSelected){
-            if(tries === undefined || tries < 2){
+          console.log("Tries: " + tries)
+          if(tries === undefined || tries <= 3){
+            if(!app.map.regions[code].element.isSelected){
               askQuestionOnClick(code);
             }else{
-              swal(regionName, "Out of tries!", "error");
-              deselectCountry(code);
+              swal("Already selected!");
+              event.preventDefault();
             }
-          }else{
-            swal("Already selected!");
-            //event.preventDefault();
+            
+          }else if(tries === 4){
+            swal(regionName, "Out of tries!", "error");
           }
-          
+
           
         },
-
       }); // new jvm.Map
-
-  }); //$.getJSON
+    }); //$.getJSON
 }
 
 //Returns a random country code from JSON file
@@ -159,13 +158,18 @@ function swalPrompt(regionName, code){
             $('#points').text("You've got" + " " + app.points + " " +"points");          
             //app.map.regions[0].element.style.selected.fill = '#FFFFF';
             regionColorOnAnswer(country, '#9CCB19');
+            counter++;
+            app.tries[country.name] = counter;
+            return true;
           }else if(inputValue != country.answer && counter < 2){
             swal.showInputError("Incorrect answer! " + (2 - counter) + " tries left.");
             counter++;
-            console.log(counter);
+            console.log(country.name + ": " + counter);
             app.tries[country.name] = counter;
             regionColorOnAnswer(country, 'orange');
           }else if(counter === 2){
+            counter += 2;
+            app.tries[country.name] = counter;
             swal("No tries left!", "error");  
             regionColorOnAnswer(country, '#F2473F');
           }
