@@ -3,13 +3,16 @@ app.settings = {
   mapname: 'europe_mill_en',
 };
 app.countries = {}; // This will hold the json map-data
-app.points = 0;
+app.pointsP1 = 0;
+app.pointsP2 = 0;
 app.map = {}; // Will hold the map plugin
 app.tries = {};
-var playerCounter = 0;
-var playerTurn = ["player1", "player2"];
-var player1Countries = []; //holds countries
-var player2Countries = [];
+app.playerCounter = 0;
+app.playerTurn = ["player1", "player2"];
+app.pointsToDiv;
+app.player1Countries = []; //holds countries
+app.player2Countries = [];
+app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#FFFFF'];
 
 // When the browser has finished loading
 $(document).ready(function() {
@@ -17,7 +20,7 @@ $(document).ready(function() {
   console.log("Good day, we are running!");
   // Let us start up this application  
   loadMap();
-  playerSelected(playerCounter);
+  playerSelected(app.playerCounter);
   resizeMap();
   $(window).resize(resizeMap);
   localStorage.clear();
@@ -162,9 +165,23 @@ function swalPrompt(regionName, code){
           if(inputValue === country.answer && counter < 3){
             console.log("Correct answer.");
             swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
-            app.points = app.points + parseInt(country.points);
-            $('#points').text("You've got" + " " + app.points + " " +"points");
-            regionColorOnAnswer(country, '#9CCB19');
+            
+            if (app.pointsToDiv == "player1"){
+	            app.pointsP1 = app.pointsP1 + parseInt(country.points);
+				$('#' + app.pointsToDiv).text("You've got" + " " + app.pointsP1 + " " +"points"); 
+				
+	            }
+	            else{
+		            app.pointsP2 = app.pointsP2 + parseInt(country.points);
+					$('#' + app.pointsToDiv).text("You've got" + " " + app.pointsP2 + " " +"points"); 	
+	            }
+            
+            	if (app.pointsToDiv == "player1"){
+	            	regionColorOnAnswer(country, app.palette[0]);
+            		}
+            		else{
+	            		regionColorOnAnswer(country, app.palette[3]);
+	            		}
             counter++;
             app.tries[country.name] = counter;
           }else if(inputValue != country.answer && counter < 2){
@@ -172,14 +189,25 @@ function swalPrompt(regionName, code){
             counter++;
             console.log(country.name + ": " + counter);
             app.tries[country.name] = counter;
-            regionColorOnAnswer(country, 'orange');
+            if (app.pointsToDiv == "player1"){
+	            	regionColorOnAnswer(country, app.palette[1]);
+            		}
+            		else{
+	            		regionColorOnAnswer(country, app.palette[4]);
+            			}
           }else if(counter === 2){
             counter += 2;
             app.tries[country.name] = counter;
             swal("No tries left!", "error");  
-            regionColorOnAnswer(country, '#F2473F');
-            playerCounter++;
-            playerSelected(playerCounter);
+            app.playerCounter++;
+            playerSelected(app.playerCounter);
+            
+            if (app.pointsToDiv == "player1"){
+	            	regionColorOnAnswer(country, app.palette[2]);
+            		}
+            		else{
+	            		regionColorOnAnswer(country, app.palette[5]);
+            			}
           }
       });
     }
@@ -194,13 +222,16 @@ function regionColorOnAnswer(country, color){
 
 // determine which player is selected and is allowed to play
 function playerSelected(playerCounter){
+
 	if (playerCounter % 2 == 0){
-		$('#'+ playerTurn[0]).css('background-color', 'blue');
-		$('#'+ playerTurn[1]).css('background-color', '');	
+		$('#'+ app.playerTurn[0]).css('background-color', 'blue');
+		$('#'+ app.playerTurn[1]).css('background-color', '');
+		app.pointsToDiv = app.playerTurn[0];	
 	}
 	else{
-		$('#'+ playerTurn[0]).css('background-color', '');
-		$('#'+ playerTurn[1]).css('background-color', 'red');		
+		$('#'+ app.playerTurn[0]).css('background-color', '');
+		$('#'+ app.playerTurn[1]).css('background-color', 'red');
+		app.pointsToDiv = app.playerTurn[1];			
 	}
 }
 
