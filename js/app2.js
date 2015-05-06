@@ -1,7 +1,7 @@
 var app = {}; // Our single global variable, that holds useful things! =)
 app.settings = {
   mapname: 'europe_mill_en',
-  bgcolor: '#ccccff',
+  bgcolor: '#006994',
 };
 app.countries = {}; // This will hold the json map-data
 app.pointsP1 = 0;
@@ -13,7 +13,7 @@ app.playerTurn = ["player1", "player2"];
 app.pointsToDiv;
 app.player1Countries = []; //holds countries
 app.player2Countries = [];
-app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#FFFFF'];
+app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
 app.iniBG;
 
 // When the browser has finished loading
@@ -112,6 +112,8 @@ function getRandomCountryCode(){
 function resizeMap(){
   $("#main").width($(window).width());
   $("#map").height($(window).height());
+  $(".col-md-2").height($(window).height());
+
   
 }
 
@@ -208,21 +210,24 @@ function swalPrompt(regionName, code){
             counter += 2;
             app.tries[country.name] = counter;
             swal("No tries left!", "error");  
-            app.playerCounter++;
+            
             playerSelected(app.playerCounter);
             if(app.playerCounter % 2 === 0){
-              app.settings.bgcolor = "red";
-              console.log(app.settings.bgcolor);
+              //app.settings.bgcolor = "red";
+              //console.log(app.settings.bgcolor);
             }else{
-              app.settings.bgcolor = "yellow";
-              console.log(app.settings.bgcolor);
+              //app.settings.bgcolor = "yellow";
+              //console.log(app.settings.bgcolor);
             }
+
             if (app.pointsToDiv == "player1"){
 	            regionColorOnAnswer(country, app.palette[2]);
+              console.log("P1 wrong: " + app.palette[2]);
             }else{
           		regionColorOnAnswer(country, app.palette[5]);
         		}
           }
+          app.playerCounter++;
       });
     }
 }
