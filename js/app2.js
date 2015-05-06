@@ -6,7 +6,10 @@ app.countries = {}; // This will hold the json map-data
 app.points = 0;
 app.map = {}; // Will hold the map plugin
 app.tries = {};
-
+var playerCounter = 0;
+var playerTurn = ["player1", "player2"];
+var player1Countries = []; //holds countries
+var player2Countries = [];
 
 // When the browser has finished loading
 $(document).ready(function() {
@@ -14,6 +17,7 @@ $(document).ready(function() {
   console.log("Good day, we are running!");
   // Let us start up this application  
   loadMap();
+  playerSelected(playerCounter);
   resizeMap();
   $(window).resize(resizeMap);
   localStorage.clear();
@@ -21,6 +25,7 @@ $(document).ready(function() {
   //tour.init();
   // Start the tour
   //tour.start();
+ 
 });
 
 // Fetches json-data for map and starts the jquery map plugin
@@ -33,7 +38,7 @@ function loadMap() {
         map: app.settings.mapname,
         backgroundColor: ['#1E90FF'],
         regionsSelectable: true,
-        markersSelectable: true,
+        markersSelectable: true, 
         series: {
 	        regions:[{
 		        values: {
@@ -78,8 +83,11 @@ function loadMap() {
           
         },
       }); // new jvm.Map
-    }); //$.getJSON
-}
+
+  }); //$.getJSON
+  
+ }
+
 
 //Returns a random country code from JSON file
 function getRandomCountryCode(){
@@ -157,10 +165,11 @@ function swalPrompt(regionName, code){
             app.points = app.points + parseInt(country.points);
             $('#points').text("You've got" + " " + app.points + " " +"points");          
             //app.map.regions[0].element.style.selected.fill = '#FFFFF';
+            if ()
             regionColorOnAnswer(country, '#9CCB19');
             counter++;
             app.tries[country.name] = counter;
-            return true;
+
           }else if(inputValue != country.answer && counter < 2){
             swal.showInputError("Incorrect answer! " + (2 - counter) + " tries left.");
             counter++;
@@ -172,6 +181,8 @@ function swalPrompt(regionName, code){
             app.tries[country.name] = counter;
             swal("No tries left!", "error");  
             regionColorOnAnswer(country, '#F2473F');
+            playerCounter ++;
+            playerSelected(playerCounter);
           }
       });
     }
@@ -183,6 +194,19 @@ function regionColorOnAnswer(country, color){
   colorcountry[country.code] = color;
   app.map.series.regions[0].setValues(colorcountry);
 }
+
+// determine which player is selected and is allowed to play
+function playerSelected(playerCounter){
+	if (playerCounter % 2 == 0){
+		$('#'+ playerTurn[0]).css('background-color', 'blue');
+		$('#'+ playerTurn[1]).css('background-color', '');	
+	}
+	else{
+		$('#'+ playerTurn[0]).css('background-color', '');
+		$('#'+ playerTurn[1]).css('background-color', 'red');		
+	}
+}
+
 
 
 // Instance the tour
