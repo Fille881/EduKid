@@ -155,12 +155,10 @@ function swalPrompt(regionName, code){
             console.log("Correct answer.");
             swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
             app.points = app.points + parseInt(country.points);
-            $('#points').text("You've got" + " " + app.points + " " +"points");          
-            //app.map.regions[0].element.style.selected.fill = '#FFFFF';
+            $('#points').text("You've got" + " " + app.points + " " +"points");
             regionColorOnAnswer(country, '#9CCB19');
             counter++;
             app.tries[country.name] = counter;
-            return true;
           }else if(inputValue != country.answer && counter < 2){
             swal.showInputError("Incorrect answer! " + (2 - counter) + " tries left.");
             counter++;
