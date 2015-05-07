@@ -11,9 +11,13 @@ app.tries = {};
 app.playerCounter = 0;
 app.playerTurn = ["player1", "player2"];
 app.pointsToDiv;
-app.player1Countries = []; //holds countries player 1
-app.player2Countries = []; //holds countries player 2
+app.playerCountries = {}; //holds countries and points player 1
+app.playerCountries.player1 ={}
+app.playerCountries.player2 ={}
+app.player2Countries = {}; //holds countries and points player 2
 app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
+
+
 // When the browser has finished loading
 $(document).ready(function() {
   'use strict';
@@ -175,16 +179,15 @@ function showConqueredCountries(playerCounter){
 			$("#list1").empty();
 			$("#list1").append('<p class="list-group-item nav-header list-group-item-info"><small> Countries conquered </small></p>' );
 			
-	 		jQuery.each( app.player1Countries, function( i, countries ) {	
-		 	$("#list1").append('<p class="list-group-item"><span class="badge">points</span>'+ countries +' </p>' ); 
+	 		jQuery.each( app.playerCountries.player1, function( country, points ) {	
+		 	$("#list1").append('<p class="list-group-item"><span class="badge">' + points + '</span>'+ country +' </p>' ); 
 			});	
 		}else{
 			$("#list2").empty();
 			$("#list2").append('<p class="list-group-item nav-header list-group-item-info"><small> Countries conquered </small></p>' );
-	 		jQuery.each( app.player2Countries, function( i, countries ) {	
-		 	$("#list2").append('<p class="list-group-item"><span class="badge">points</span>'+ countries +' </p>' );				
-		});
-
+	 		jQuery.each( app.playerCountries.player2, function( country, points ) {	
+		 	$("#list2").append('<p class="list-group-item"><span class="badge">' + points + '</span>'+ country +' </p>' ); 
+			});	
 	}
 }
 
