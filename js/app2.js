@@ -14,8 +14,6 @@ app.pointsToDiv;
 app.player1Countries = []; //holds countries
 app.player2Countries = [];
 app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
-app.iniBG;
-
 // When the browser has finished loading
 $(document).ready(function() {
   'use strict';
@@ -42,7 +40,7 @@ function loadMap() {
       app.map = new jvm.Map({
         container: $('#map'),
         map: app.settings.mapname,
-        backgroundColor: app.settings.bgcolor,
+        backgroundColor: "#ccccff",
         zoomButtons : false,
         regionsSelectable: true,
         markersSelectable: true,
@@ -89,6 +87,7 @@ function loadMap() {
             }
             
           }else if(tries === 4){
+            app.iniBG = "red";
             swal(regionName, "Out of tries!", "error");
           }
 
@@ -207,18 +206,9 @@ function swalPrompt(regionName, code){
 	            		regionColorOnAnswer(country, app.palette[4]);
             			}
           }else if(counter === 2){
-            counter += 2;
+             counter += 2;
             app.tries[country.name] = counter;
-            swal("No tries left!", "error");  
-            
-            playerSelected(app.playerCounter);
-            if(app.playerCounter % 2 === 0){
-              //app.settings.bgcolor = "red";
-              //console.log(app.settings.bgcolor);
-            }else{
-              //app.settings.bgcolor = "yellow";
-              //console.log(app.settings.bgcolor);
-            }
+            swal("No tries left!", "error");           
 
             if (app.pointsToDiv == "player1"){
 	            regionColorOnAnswer(country, app.palette[2]);
@@ -226,10 +216,22 @@ function swalPrompt(regionName, code){
             }else{
           		regionColorOnAnswer(country, app.palette[5]);
         		}
+            changeBGcolor();            
+            app.playerCounter++;
+            playerSelected(app.playerCounter);
           }
-          app.playerCounter++;
       });
     }
+}
+
+//change background color depending on current player number
+function changeBGcolor(playerCounter){
+  console.log("Player counter: " + app.playerCounter);
+  if(app.playerCounter % 2 != 0){
+    app.map.setBackgroundColor("#ccccff");
+  }else{
+    app.map.setBackgroundColor("#F5CCA3");
+  }  
 }
 
 //colors the region. pass the color (hex or word) as an argument
@@ -244,12 +246,12 @@ function playerSelected(playerCounter){
 
 	if (playerCounter % 2 == 0){
 		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'600'});
-		$('#'+ app.playerTurn[1]).css({'background-color': 'lavenderblush','font-weight':'100'});
+		$('#'+ app.playerTurn[1]).css({'background-color': '#F5CCA3','font-weight':'100'});
 		app.pointsToDiv = app.playerTurn[0];	
 	}
 	else{
 		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'100'});
-		$('#'+ app.playerTurn[1]).css({'background-color': 'lavenderblush','font-weight':'600'});
+		$('#'+ app.playerTurn[1]).css({'background-color': '#F5CCA3','font-weight':'600'});
 		app.pointsToDiv = app.playerTurn[1];			
 	}
 }
