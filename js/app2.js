@@ -51,8 +51,7 @@ function loadMap() {
         },
         series: {
 	        regions:[{
-		        values: {
-			        
+		        values: {       
 		        },
 		        attribute: 'fill'
 	        }]
@@ -67,12 +66,9 @@ function loadMap() {
               countrypoints = country.points
             }
           });
-
           var labelflag = '<img src="../img/flags/'+ code + '.png" width="16px" height="11px">';
           var labelpoints = '<br>This country is worth ' + countrypoints + ' points.';
           label.html(labelflag + labelpoints);
-
-
        },
         onRegionClick: function(event, code){
           var tries = app.tries[app.map.getRegionName(code)];
@@ -89,9 +85,7 @@ function loadMap() {
           }else if(tries === 4){
             app.iniBG = "red";
             swal(regionName, "Out of tries!", "error");
-          }
-
-          
+          }       
         },
       }); // new jvm.Map
 
@@ -161,14 +155,14 @@ function playerSelected(playerCounter){
 
 	if (playerCounter % 2 == 0){
 		$("#points1").empty();
-		$('#points1').append("Player 1: " + " " + app.pointsP1 + " " +"points"); 
+		$('#points1').append("Points:" + " " + app.pointsP1); 
 		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'600'});
 		$('#'+ app.playerTurn[1]).css({'background-color': '#F5CCA3','font-weight':'100'});
 		app.pointsToDiv = app.playerTurn[0];	
 	}
 	else{
 		$("#points2").empty();
-		$('#points2').append("Player 2: " + " " + app.pointsP2 + " " +"points"); 
+		$('#points2').append("Points:" + " " + app.pointsP2);
 		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'100'});
 		$('#'+ app.playerTurn[1]).css({'background-color': '#F5CCA3','font-weight':'600'});
 		app.pointsToDiv = app.playerTurn[1];			
@@ -178,17 +172,17 @@ function playerSelected(playerCounter){
 function showConqueredCountries(playerCounter){
 	
 		if (playerCounter % 2 == 0){
-			
 			$("#list1").empty();
-	 		jQuery.each( app.player1Countries, function( i, countries ) {	
-		 	$( "#list1").append('<li>' + countries + '</li>' ); 
-			});
+			$("#list1").append('<p class="list-group-item nav-header list-group-item-info"><small> Countries conquered </small></p>' );
 			
+	 		jQuery.each( app.player1Countries, function( i, countries ) {	
+		 	$("#list1").append('<p class="list-group-item"><span class="badge">points</span>'+ countries +' </p>' ); 
+			});	
 		}else{
 			$("#list2").empty();
+			$("#list2").append('<p class="list-group-item nav-header list-group-item-info"><small> Countries conquered </small></p>' );
 	 		jQuery.each( app.player2Countries, function( i, countries ) {	
-		 	$( "#list2").append('<li>' + countries + '</li>' );
-				
+		 	$("#list2").append('<p class="list-group-item"><span class="badge">points</span>'+ countries +' </p>' );				
 		});
 
 	}
