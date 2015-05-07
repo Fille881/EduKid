@@ -11,8 +11,8 @@ app.tries = {};
 app.playerCounter = 0;
 app.playerTurn = ["player1", "player2"];
 app.pointsToDiv;
-app.player1Countries = []; //holds countries
-app.player2Countries = [];
+app.player1Countries = []; //holds countries player 1
+app.player2Countries = []; //holds countries player 2
 app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
 app.iniBG;
 
@@ -178,13 +178,16 @@ function swalPrompt(regionName, code){
             swal("Nice!", "You wrote: " + inputValue + "Points: " + country.points, "success");
             
             if (app.pointsToDiv == "player1"){
-	            app.pointsP1 = app.pointsP1 + parseInt(country.points);
-				$('#' + app.pointsToDiv).text("Player 1: " + " " + app.pointsP1 + " " +"points"); 
-				
+	           	app.pointsP1 = app.pointsP1 + parseInt(country.points); 
+			   	app.player1Countries.push(regionName);
+			   	playerSelected(app.playerCounter);
+			   	showConqueredCountries(app.playerCounter);				
 	            }
 	            else{
 		            app.pointsP2 = app.pointsP2 + parseInt(country.points);
-					$('#' + app.pointsToDiv).text("Player 2: " + " " + app.pointsP2 + " " +"points"); 	
+					app.player2Countries.push(regionName);
+					playerSelected(app.playerCounter);
+					showConqueredCountries(app.playerCounter);		
 	            }
             
             	if (app.pointsToDiv == "player1"){
@@ -211,7 +214,6 @@ function swalPrompt(regionName, code){
             app.tries[country.name] = counter;
             swal("No tries left!", "error");  
             
-            playerSelected(app.playerCounter);
             if(app.playerCounter % 2 === 0){
               //app.settings.bgcolor = "red";
               //console.log(app.settings.bgcolor);
@@ -226,9 +228,11 @@ function swalPrompt(regionName, code){
             }else{
           		regionColorOnAnswer(country, app.palette[5]);
         		}
+        		 app.playerCounter++;
+				 playerSelected(app.playerCounter);
+
           }
-          app.playerCounter++;
-      });
+               });
     }
 }
 
@@ -243,17 +247,39 @@ function regionColorOnAnswer(country, color){
 function playerSelected(playerCounter){
 
 	if (playerCounter % 2 == 0){
+		$("#points1").empty();
+		$('#points1').append("Player 1: " + " " + app.pointsP1 + " " +"points"); 
 		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'600'});
 		$('#'+ app.playerTurn[1]).css({'background-color': 'lavenderblush','font-weight':'100'});
 		app.pointsToDiv = app.playerTurn[0];	
 	}
 	else{
+		$("#points2").empty();
+		$('#points2').append("Player 2: " + " " + app.pointsP2 + " " +"points"); 
 		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'100'});
 		$('#'+ app.playerTurn[1]).css({'background-color': 'lavenderblush','font-weight':'600'});
 		app.pointsToDiv = app.playerTurn[1];			
 	}
 }
 
+function showConqueredCountries(playerCounter){
+	
+		if (playerCounter % 2 == 0){
+			
+			$("#list1").empty();
+	 		jQuery.each( app.player1Countries, function( i, countries ) {	
+		 	$( "#list1").append('<li>' + countries + '</li>' ); 
+			});
+			
+		}else{
+			$("#list2").empty();
+	 		jQuery.each( app.player2Countries, function( i, countries ) {	
+		 	$( "#list2").append('<li>' + countries + '</li>' );
+				
+		});
+
+	}
+}
 
 
 // Instance the tour
