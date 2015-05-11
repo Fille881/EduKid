@@ -11,3 +11,6 @@ $('.jvectormap-tip').css("background-image", "url(../img/flags/squareflags/"+ na
 
 // adding audio clip
 http://stackoverflow.com/questions/11562509/adding-audio-to-click-event
+
+//mac only: renaming files to upper or lower case
+http://stackoverflow.com/questions/7787029/how-do-i-rename-all-files-to-lowercase

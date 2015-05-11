@@ -172,15 +172,17 @@ function playerSelected(playerCounter){
 		app.pointsToDiv = app.playerTurn[1];			
 	}
 }
-
-function showConqueredCountries(playerCounter){
+//<span class="icon-ad"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+function showConqueredCountries(playerCounter, countryCode){
 	
 		if (playerCounter % 2 == 0){
 			$("#list1").empty();
 			$("#list1").append('<p class="list-group-item nav-header list-group-item-info"><small> Countries conquered </small></p>' );
-			
-	 		jQuery.each( app.playerCountries.player1, function( country, points ) {	
-		 	$("#list1").append('<p class="list-group-item"><span class="badge">' + points + '</span>'+ country +' </p>' ); 
+	 		
+	 		jQuery.each( app.playerCountries.player1, function( country, points ) {
+		 	
+		 	console.log(countryCode);
+		 	$("#list1").append('<p class="list-group-item"><span class="icon-' + countryCode + '"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span></span><span class="badge">' + points + '</span>' + ' ' + country +' </p>' ); 
 			});	
 		}else{
 			$("#list2").empty();

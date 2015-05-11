@@ -42,7 +42,9 @@ function swalPrompt(regionName, code){
 	           	app.playerCountries.player1[regionName] = country.points;
 			   	console.log(app.playerCountries.player1);
 			   	playerSelected(app.playerCounter);
-			   	showConqueredCountries(app.playerCounter, country.points);
+			   	var countryCode = country.code;
+			   	showConqueredCountries(app.playerCounter, countryCode);
+			   	
 			   	
 			   				
 	            }
