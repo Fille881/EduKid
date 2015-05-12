@@ -44,18 +44,23 @@ function swalPrompt(regionName, code){
 		           	points: country.points,
 		           	code: country.code,
 	           	};
-			   	playerSelected(app.playerCounter);
-			   	var countryCode = country.code;
-			   	showConqueredCountries(app.playerCounter);
+    			   	playerSelected(app.playerCounter);
+    			   	var countryCode = country.code;
+    			   	showConqueredCountries(app.playerCounter);
 			   	
 			   	
 			   				
 	            }
 	            else{
-		            app.pointsP2 = app.pointsP2 + parseInt(country.points);
-					app.playerCountries.player2[regionName] = country.points;
-					playerSelected(app.playerCounter);
-					showConqueredCountries(app.playerCounter);		
+		           app.pointsP2 = app.pointsP2 + parseInt(country.points); 
+              app.playerCountries.player2[regionName] = {
+                name: regionName,
+                points: country.points,
+                code: country.code,
+              };
+              playerSelected(app.playerCounter);
+              var countryCode = country.code;
+              showConqueredCountries(app.playerCounter);
 	            }
             
             	if (app.pointsToDiv == "player1"){
