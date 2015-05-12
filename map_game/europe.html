@@ -8,8 +8,7 @@
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link href="../css/bootstrap-tour.min.css" rel="stylesheet">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">  
   <audio id="Spain" preload="auto"> <source src="../Spain.mp3"></source></audio>
   <script src="../plugin/dist/sweetalert.min.js"></script>
   <script src="jquery-1.11.2.min.js"></script>
@@ -21,27 +20,25 @@
   <script src="../js/app2.js"></script>
 </head>
 <body>
-<div class="container" id="main">
-	<div class="row">
+<div class="container-fluid" id="main">
+	<div class="row" style="margin-right:0px;">
 		<div class="col-md-2" id="player1">
 			<h3>Player 1</h3>
-			<p id="points1"></p>	
-			<div class="list-group-custom" id="list1"></div>	
-			</div>
+			<button class="btn btn-endturn1">End turn</button>			
+			<div class="list-group-custom" id="list1">
+				<p class="list-group-item nav-header list-group-item-info">Countries conquered</p>
+			</div>	
+		</div>
 		<div class="col-md-8" id="map">
-	 </div>
+		</div>
 		<div class="col-md-2" id="player2">
 			<h3>Player 2:</h3>
-			<p id="points2"></p>
-			<div class="list-group-custom" id="list2"></div>	
-		</div>
-		
+			<button class="btn btn-endturn2">End turn</button>
+			<div class="list-group-custom" id="list2">
+				<p class="list-group-item nav-header list-group-item-info">Countries conquered</p>				
+			</div>	
+		</div>		
 	</div>
-	
-	<div class="row">
-		<div class="col-md-12" id="map">			
-		</div>	
-	 </div>
 </div>
 </div>
 </body>

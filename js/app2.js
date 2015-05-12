@@ -21,7 +21,7 @@ app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
 // When the browser has finished loading
 $(document).ready(function() {
   'use strict';
-  console.log("Good day, we are running!");
+  endturn();
   // Let us start up this application  
   loadMap();
   playerSelected(app.playerCounter);
@@ -35,6 +35,16 @@ $(document).ready(function() {
   
  
 });
+
+//ends player turn
+function endturn(){
+  $(".btn-endturn1, .btn-endturn2").click(function(){
+    changeBGcolor();            
+    app.playerCounter++;
+    playerSelected(app.playerCounter);
+    console.log(app.playerCounter);
+  })
+}
 
 // Fetches json-data for map and starts the jquery map plugin
 function loadMap() {
@@ -158,15 +168,15 @@ function regionColorOnAnswer(country, color){
 function playerSelected(playerCounter){
 
 	if (playerCounter % 2 == 0){
-		$("#points1").empty();
-		$('#points1').append("Points:" + " " + app.pointsP1); 
+		//$("#points1").empty();
+		//$('#points1').append("Points:" + " " + app.pointsP1); 
 		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'600'});
 		$('#'+ app.playerTurn[1]).css({'background-color': '#F5CCA3','font-weight':'100'});
 		app.pointsToDiv = app.playerTurn[0];	
 	}
 	else{
-		$("#points2").empty();
-		$('#points2').append("Points:" + " " + app.pointsP2);
+		//$("#points2").empty();
+		//$('#points2').append("Points:" + " " + app.pointsP2);
 		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'100'});
 		$('#'+ app.playerTurn[1]).css({'background-color': '#F5CCA3','font-weight':'600'});
 		app.pointsToDiv = app.playerTurn[1];			
@@ -177,14 +187,14 @@ function playerSelected(playerCounter){
 function showConqueredCountries(playerCounter){
 		if (playerCounter % 2 == 0){
 			$("#list1").empty();
-			$("#list1").append('<p class="list-group-item nav-header list-group-item-info"><small> Countries conquered </small></p>' );	 		
+			$("#list1").append('<p class="list-group-item nav-header list-group-item-info"><small> Total points: </small>' + app.pointsP1 + '</p>' );	 		
 	 		$.each( app.playerCountries.player1, function(i, country) {
 		 		$("#list1").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
         $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');
 			});	
 		}else{
 			$("#list2").empty();
-      $("#list2").append('<p class="list-group-item nav-header list-group-item-info"><small> Countries conquered </small></p>' );      
+      $("#list2").append('<p class="list-group-item nav-header list-group-item-info"><small> Total points: </small>' + app.pointsP2 + '</p>' );      
       $.each( app.playerCountries.player2, function(i, country) {
         $("#list2").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
         $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');    
