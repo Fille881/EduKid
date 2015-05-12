@@ -180,7 +180,7 @@ function showConqueredCountries(playerCounter){
 			$("#list1").append('<p class="list-group-item nav-header list-group-item-info"><small> Countries conquered </small></p>' );	 		
 	 		$.each( app.playerCountries.player1, function(i, country) {
 		 		$("#list1").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
-        $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');		
+        $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');
 			});	
 		}else{
 			$("#list2").empty();
