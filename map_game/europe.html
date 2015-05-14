@@ -17,6 +17,7 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <script src="../js/bootstrap-tour.min.js"></script>
   <script src="../js/prompt.js"></script>
+  <script src="../js/mustache.js"></script>
   <script src="../js/app2.js"></script>
 </head>
 <body>
@@ -41,5 +42,26 @@
 	</div>
 </div>
 </div>
+
+<!-- Templates -->
+
+<script id="showConqueredCountries" type="x-tmpl-mustache">
+<p class="list-group-item nav-header list-group-item-info">
+    <small>
+        Total points:
+    </small>
+    {{points}}
+</p>
+
+{{#playerCountries}}
+<li class="list-group-item" id="{{countryname}}">
+    <img src="../img/flags/squareflags/{{country.name}}.png}}">
+    <span class="badge">{{countrypoints}}</span>
+    {{countryname}}
+</li>
+
+{{/playerCountries}}
+</script>
+
 </body>
 </html>

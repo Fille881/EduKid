@@ -183,23 +183,19 @@ function playerSelected(playerCounter){
 	}
 }
 
+
+
+function currentPlayer (playerCounter) {
+  return (playerCounter % 2) + 1;
+}
+
 //creates a list for each player with a list item for each conquered country ( flag, name, points)
 function showConqueredCountries(playerCounter){
-		if (playerCounter % 2 == 0){
-			$("#list1").empty();
-			$("#list1").append('<p class="list-group-item nav-header list-group-item-info"><small> Total points: </small>' + app.pointsP1 + '</p>' );	 		
-	 		$.each( app.playerCountries.player1, function(i, country) {
-		 		$("#list1").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
-        $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');
-			});	
-		}else{
-			$("#list2").empty();
-      $("#list2").append('<p class="list-group-item nav-header list-group-item-info"><small> Total points: </small>' + app.pointsP2 + '</p>' );      
-      $.each( app.playerCountries.player2, function(i, country) {
-        $("#list2").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
-        $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');    
-      }); 
-	}	
+  var currentPlayer = currentPlayer(playerCounter);
+  var elem = "#list" + currentPlayer;
+  
+  
+
 }
 
 
