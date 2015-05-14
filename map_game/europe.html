@@ -46,21 +46,20 @@
 <!-- Templates -->
 
 <script id="showConqueredCountries" type="x-tmpl-mustache">
-<p class="list-group-item nav-header list-group-item-info">
-    <small>
-        Total points:
-    </small>
-    {{points}}
-</p>
+    <p class="list-group-item nav-header list-group-item-info">
+        <small>
+            Total points:
+        </small>
+        {{playerpoints}}
+    </p>
 
-{{#playerCountries}}
-<li class="list-group-item" id="{{countryname}}">
-    <img src="../img/flags/squareflags/{{country.name}}.png}}">
-    <span class="badge">{{countrypoints}}</span>
-    {{countryname}}
-</li>
-
-{{/playerCountries}}
+    {{#playerCountries}}
+    <li class="list-group-item" id="{{name}}">
+        <img class="flag2" src="../img/flags/squareflags/{{name}}.png">
+        <span class="badge">{{points}}</span>
+        {{name}}
+    </li>
+    {{/playerCountries}}
 </script>
 
 </body>

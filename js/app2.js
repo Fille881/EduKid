@@ -12,8 +12,8 @@ app.playerCounter = 0;
 app.playerTurn = ["player1", "player2"];
 app.pointsToDiv;
 app.playerCountries = {}; //holds countries and points player 1
-app.playerCountries.player1 ={}
-app.playerCountries.player2 ={}
+app.playerCountries.player1 =[]
+app.playerCountries.player2 =[]
 app.player2Countries = {}; //holds countries and points player 2
 app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
 
@@ -185,17 +185,31 @@ function playerSelected(playerCounter){
 
 
 
-function currentPlayer (playerCounter) {
+function getcurrentPlayer (playerCounter) {
   return (playerCounter % 2) + 1;
 }
 
 //creates a list for each player with a list item for each conquered country ( flag, name, points)
 function showConqueredCountries(playerCounter){
-  var currentPlayer = currentPlayer(playerCounter);
+  var currentPlayer = getcurrentPlayer(playerCounter); // returns 1 or 2
   var elem = "#list" + currentPlayer;
-  
-  
+  var template = $("#showConqueredCountries").html(); //get our htmltemplate
+  var playerdata = { // prepare data to put into our html-template
+    playerpoints: app["pointsP" + currentPlayer],
+    playerCountries: app.playerCountries["player"+currentPlayer],
+  };
 
+  var renderedhtml = Mustache.render(template, playerdata); // Let Mustache put in the data
+  $(elem).html(renderedhtml); // Insert our new html to the playerlist
+
+/*
+  $("#list2").empty();
+      $("#list2").append('<p class="list-group-item nav-header list-group-item-info"><small> Total points: </small>' + app.pointsP2 + '</p>' );      
+      $.each( app.playerCountries.player2, function(i, country) {
+        $("#list2").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
+        $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');    
+      }); 
+*/
 }
 
 

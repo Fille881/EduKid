@@ -39,11 +39,11 @@ function swalPrompt(regionName, code){
             
             if (app.pointsToDiv == "player1"){
 	           	app.pointsP1 = app.pointsP1 + parseInt(country.points); 
-	           	app.playerCountries.player1[regionName] = {
+	           	app.playerCountries.player1.push({
 		           	name: regionName,
 		           	points: country.points,
 		           	code: country.code,
-	           	};
+	           	});
     			   	playerSelected(app.playerCounter);
     			   	var countryCode = country.code;
     			   	showConqueredCountries(app.playerCounter);
@@ -53,11 +53,11 @@ function swalPrompt(regionName, code){
 	            }
 	            else{
 		           app.pointsP2 = app.pointsP2 + parseInt(country.points); 
-              app.playerCountries.player2[regionName] = {
+              app.playerCountries.player2.push({
                 name: regionName,
                 points: country.points,
                 code: country.code,
-              };
+              });
               playerSelected(app.playerCounter);
               var countryCode = country.code;
               showConqueredCountries(app.playerCounter);
