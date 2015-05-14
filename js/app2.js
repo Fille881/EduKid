@@ -1,21 +1,48 @@
-var app = {}; // Our single global variable, that holds useful things! =)
+var app = app || {}; // Our single global variable, that holds useful things! =)
 app.settings = {
   mapname: 'europe_mill_en',
   bgcolor: '#006994',
 };
 app.countries = {}; // This will hold the json map-data
-app.pointsP1 = 0;
-app.pointsP2 = 0;
 app.map = {}; // Will hold the map plugin
 app.tries = {};
-app.playerCounter = 0;
-app.playerTurn = ["player1", "player2"];
-app.pointsToDiv;
-app.playerCountries = {}; //holds countries and points player 1
-app.playerCountries.player1 =[]
-app.playerCountries.player2 =[]
-app.player2Countries = {}; //holds countries and points player 2
+app.currentPlayer = function () {
+  var curplayer = 0;
+  return {
+    change: function() {
+      curplayer = (curplayer + 1) % 2; // shifts between 0 and 1
+    },
+    get: function () {
+      return curplayer;
+    }
+  };
+}();
+
+app.playerNames = ["player1", "player2"];
 app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
+
+app.players = [];
+
+
+
+// The Player class //
+function Player() {
+  this.points = 0;
+  this.countries = [];
+}
+
+Player.prototype.addpoints = function (points) {
+  this.points = this.points + points;
+};
+Player.prototype.addcountry = function (name, points, code) {
+  this.countries.push({
+    name: name,
+    points: points,
+    code: code,
+  });
+};
+
+/////
 
 
 // When the browser has finished loading
@@ -23,15 +50,17 @@ $(document).ready(function() {
   'use strict';
   endturn();
   // Let us start up this application  
-  loadMap();
-  playerSelected(app.playerCounter);
+  app.EduMap.init(); // Load the map
   resizeMap();
   $(window).resize(resizeMap);
   localStorage.clear();
+
+  app.players.push(new Player());
+  app.players.push(new Player());
   // Initialize the tour
-  //tour.init();
+  //app.tour.init();
   // Start the tour
-  //tour.start();
+  //app.tour.start();
   
  
 });
@@ -39,182 +68,46 @@ $(document).ready(function() {
 //ends player turn
 function endturn(){
   $(".btn-endturn1, .btn-endturn2").click(function(){
-    changeBGcolor();            
-    app.playerCounter++;
-    playerSelected(app.playerCounter);
-    console.log(app.playerCounter);
-  })
+    EduMap.changeBGcolor();            
+    app.currentPlayer.change();
+    // Remember to change classes here for bold
+    console.log(app.currentPlayer.get());
+  });
 }
 
-// Fetches json-data for map and starts the jquery map plugin
-function loadMap() {
-  'use strict';
-  $.getJSON('../maps/' + app.settings.mapname + '.json', function( data ) {
-      app.countries = data.country; // Store the json-data in our app-object, so we can use it everywhere
-      app.map = new jvm.Map({
-        container: $('#map'),
-        map: app.settings.mapname,
-        backgroundColor: "#ccccff",
-        zoomButtons : false,
-        regionsSelectable: true,
-        markersSelectable: true,
-        regionStyle: {
-          initial:{
-            fill: "white",
-          }
-        },
-        series: {
-	        regions:[{
-		        values: {       
-		        },
-		        attribute: 'fill'
-	        }]
-        },
-        selectedRegions: [getRandomCountryCode(data)],
-        onRegionTipShow: function(event, label, code) {
-          var regionName = app.map.getRegionName(code);
-          var countrypoints;
-
-          app.countries.forEach(function(country) {
-            if (regionName === country.name) {
-              countrypoints = country.points
-            }
-          });
-          var labelflag = '<img src="../img/flags/'+ code + '.png" width="16px" height="11px">';
-          var labelpoints = '<br>This country is worth ' + countrypoints + ' points.';
-          label.html(labelflag + labelpoints);
-       },
-        onRegionClick: function(event, code){
-          var tries = app.tries[app.map.getRegionName(code)];
-          var regionName = app.map.getRegionName(code);
-          console.log("Tries: " + tries)
-          if(tries === undefined || tries <= 3){
-            if(!app.map.regions[code].element.isSelected){
-              askQuestionOnClick(code);
-            }else{
-              swal("Already selected!");
-              event.preventDefault();
-            }
-            
-          }else if(tries === 4){
-            app.iniBG = "red";
-            swal(regionName, "Out of tries!", "error");
-          }       
-        },
-      }); // new jvm.Map
-
-  }); //$.getJSON
-  
- }
-
-
-//Returns a random country code from JSON file
-function getRandomCountryCode(){
-  'use strict';
-  var random_id = Math.floor(Math.random()*app.countries.length);
-  return app.countries[random_id].code;
-}
 
 //responsive map resize
 function resizeMap(){
   $("#main").width($(window).width());
   $("#map").height($(window).height());
   $(".col-md-2").height($(window).height());
-
   
 }
 
-//Ask question and validates answer
-function askQuestionOnClick(code){
-  'use strict';
-  var regionName = app.map.getRegionName(code);
-  swalPrompt(regionName, code);
-}
 
-//deselects clicked on region, used when answer is false. 
-//Explanation: if regions isSelected, create an object "o", 
-//add to it property "code"(dynamic value, current country code) with value "false"
-//call setSelectedRegions with that property: value key
-function deselectCountry(code){
-console.log(code) 
-  if(app.map.regions[code].element.isSelected) {
-      console.log("Auto-deselecting: " + code); 
-      var o = {};
-      o[code] = false;  
-      app.map.setSelectedRegions(o);
-  } 
-}
+/////// Views /////////
 
+//Shows a list with the player's conquered countries
+//Uses a template from the bottom of the html file ( flag, name, points)
+function showConqueredCountries(playerObj){
 
-
-//change background color depending on current player number
-function changeBGcolor(playerCounter){
-  console.log("Player counter: " + app.playerCounter);
-  if(app.playerCounter % 2 != 0){
-    app.map.setBackgroundColor("#ccccff");
-  }else{
-    app.map.setBackgroundColor("#F5CCA3");
-  }  
-}
-
-//colors the region. pass the color (hex or word) as an argument
-function regionColorOnAnswer(country, color){
-  var colorcountry = {};
-  colorcountry[country.code] = color;
-  app.map.series.regions[0].setValues(colorcountry);
-}
-
-// determine which player is selected and is allowed to play
-function playerSelected(playerCounter){
-
-	if (playerCounter % 2 == 0){
-		//$("#points1").empty();
-		//$('#points1').append("Points:" + " " + app.pointsP1); 
-		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'600'});
-		$('#'+ app.playerTurn[1]).css({'background-color': '#F5CCA3','font-weight':'100'});
-		app.pointsToDiv = app.playerTurn[0];	
-	}
-	else{
-		//$("#points2").empty();
-		//$('#points2').append("Points:" + " " + app.pointsP2);
-		$('#'+ app.playerTurn[0]).css({'background-color': '#ccccff','font-weight':'100'});
-		$('#'+ app.playerTurn[1]).css({'background-color': '#F5CCA3','font-weight':'600'});
-		app.pointsToDiv = app.playerTurn[1];			
-	}
-}
-
-
-
-function getcurrentPlayer (playerCounter) {
-  return (playerCounter % 2) + 1;
-}
-
-//creates a list for each player with a list item for each conquered country ( flag, name, points)
-function showConqueredCountries(playerCounter){
-  var currentPlayer = getcurrentPlayer(playerCounter); // returns 1 or 2
-  var elem = "#list" + currentPlayer;
+  //var playerObj = app.players[app.currentPlayer.get()]; //get the object of the current player
+  var curPlayer = app.currentPlayer.get();
+  var elem = "#list" + (curPlayer + 1);
   var template = $("#showConqueredCountries").html(); //get our htmltemplate
   var playerdata = { // prepare data to put into our html-template
-    playerpoints: app["pointsP" + currentPlayer],
-    playerCountries: app.playerCountries["player"+currentPlayer],
+    playerpoints: playerObj.points,
+    playerCountries: playerObj.countries,
   };
 
   var renderedhtml = Mustache.render(template, playerdata); // Let Mustache put in the data
   $(elem).html(renderedhtml); // Insert our new html to the playerlist
 
-/*
-  $("#list2").empty();
-      $("#list2").append('<p class="list-group-item nav-header list-group-item-info"><small> Total points: </small>' + app.pointsP2 + '</p>' );      
-      $.each( app.playerCountries.player2, function(i, country) {
-        $("#list2").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
-        $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');    
-      }); 
-*/
 }
 
 
-// Instance the tour
-var tour = new Tour({
+/////// Instance the tour
+app.tour = new Tour({
   steps: [
   {
     //path: "europe.html",

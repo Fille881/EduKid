@@ -3,6 +3,29 @@ ul {
 	font-size: 12px;
 }
 
+
+
+///////// Player score list /////////
+
+.player {
+  
+}
+
+#player1 {
+  background-color: #ccccff;
+}
+
+#player2 {
+  background-color: #F5CCA3;
+}
+
+.player-active {
+  font-weight: 600;
+}
+
+///////////
+
+
 .flag{
 	padding-left: 30px;
     background-position: 0 center;
