@@ -17,29 +17,68 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <script src="../js/bootstrap-tour.min.js"></script>
   <script src="../js/prompt.js"></script>
+  <script src="../js/mustache.js"></script>
+  <script src="../js/i18next-1.8.0.js"></script>
+  <script src="../js/EduMap.js"></script>
   <script src="../js/app2.js"></script>
 </head>
 <body>
+
+
+    
 <div class="container-fluid" id="main">
 	<div class="row" style="margin-right:0px;">
-		<div class="col-md-2" id="player1">
-			<h3>Player 1</h3>
-			<button class="btn btn-endturn1">End turn</button>			
+		<div class="col-md-2 player" id="player1">
+			<h3 data-i18n="playerlist.player1">Player 1</h3>
+			<button class="btn btn-endturn1" data-i18n="playerlist.endturn">End turn</button>			
 			<div class="list-group-custom" id="list1">
-				<p class="list-group-item nav-header list-group-item-info">Countries conquered</p>
+				<p class="list-group-item nav-header list-group-item-info" data-i18n="playerlist.conquered">Countries conquered</p>
 			</div>	
 		</div>
 		<div class="col-md-8" id="map">
 		</div>
-		<div class="col-md-2" id="player2">
-			<h3>Player 2:</h3>
-			<button class="btn btn-endturn2">End turn</button>
+		<div class="col-md-2 player" id="player2">
+			<h3 data-i18n="playerlist.player2">Player 2:</h3>
+			<button class="btn btn-endturn2" data-i18n="playerlist.endturn">End turn</button>
 			<div class="list-group-custom" id="list2">
+<<<<<<< HEAD
 				<p class="list-group-item nav-header list-group-item-info">Countries conquered</p>
+=======
+				<p class="list-group-item nav-header list-group-item-info" data-i18n="playerlist.conquered">Countries conquered</p>				
+>>>>>>> internationalization
 			</div>	
 		</div>		
 	</div>
 </div>
 </div>
+
+<div class="languagemenu">
+<a onclick="setLanguage('se')">
+    <img src="../img/flags/squareflags/Sweden.png" alt="Set Swedish language">
+</a>
+<a onclick="setLanguage('en')">
+    <img src="../img/flags/squareflags/United Kingdom.png" alt="Set English language">
+</a>
+</div>
+
+<!-- Templates -->
+
+<script id="showConqueredCountries" type="x-tmpl-mustache">
+    <p class="list-group-item nav-header list-group-item-info">
+        <small data-i18n="playerlist.totalpoints">
+            Total pointss:
+        </small>
+        {{playerpoints}}
+    </p>
+
+    {{#playerCountries}}
+    <li class="list-group-item" id="{{name}}">
+        <img class="flag2" src="../img/flags/squareflags/{{flagname}}.png">
+        <span class="badge">{{points}}</span>
+        {{name}}
+    </li>
+    {{/playerCountries}}
+</script>
+
 </body>
 </html>
