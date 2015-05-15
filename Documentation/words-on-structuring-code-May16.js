@@ -18,7 +18,8 @@ As an app gets bigger, it can be nice to separate things into modules. Preferabl
 that are about internal workings should be hidden, and then you would only expose functions
 that make sense for other modules to use.
 Example: if you have a E-commerce web site. One module could be the shopping cart.
-In javascript, you don't have private variables or functions easily, but we can create the same effect with The module pattern:
+In javascript, you don't have private variables or functions easily,
+but we can create the same effect with The module pattern:
 */
 
 
