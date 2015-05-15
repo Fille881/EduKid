@@ -113,7 +113,10 @@ app.EduMap = function() {
 
 
     return {
-
+        // Only these functions can be reached by other parts of the app. Just add more if you need.
+        // The point is too make our app a bit more structured, and separate the app into different parts.
+        // We might remove this though because it might be a bit too much
+        // (you know have to write app.EduMap.<yourfunction> to use these functions from other files.)
         init: loadMap,
         regionColorOnAnswer: regionColorOnAnswer,
         changeBGcolor: changeBGcolor,
