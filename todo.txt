@@ -4,3 +4,6 @@
 2. style total point counter
 3. how does a player win the game?
 4. animations
+5. responsive that works
+6. possibly some menu
+7. Write some questions (would be nice of some question had a picture.)
