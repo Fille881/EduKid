@@ -1,6 +1,6 @@
 // This variable holds all functions that has anything to do with manipulating the jvector map.
 var app = {};
-app.EduMap = function($, document) {
+app.EduMap = function() {
 
 
         //Ask question and validates answer
@@ -15,7 +15,7 @@ app.EduMap = function($, document) {
     //add to it property "code"(dynamic value, current country code) with value "false"
     //call setSelectedRegions with that property: value key
     function deselectCountry(code){
-    console.log(code) 
+    console.log(code) ;
       if(app.map.regions[code].element.isSelected) {
           console.log("Auto-deselecting: " + code); 
           var o = {};
@@ -78,7 +78,7 @@ app.EduMap = function($, document) {
                 }
               });
               var labelflag = '<img src="../img/flags/'+ code + '.png" width="16px" height="11px">';
-              var labelpoints = '<br>This country is worth ' + countrypoints + ' points.';
+              var labelpoints = '<br>' + i18n.t("maplabel.pointsworth") + countrypoints + i18n.t("maplabel.points");
               label.html(labelflag + labelpoints);
            },
             onRegionClick: function(event, code){
@@ -116,11 +116,13 @@ app.EduMap = function($, document) {
 
         init: loadMap,
         regionColorOnAnswer: regionColorOnAnswer,
+        changeBGcolor: changeBGcolor,
+        deselectCountry: deselectCountry,
 
 
 
 
 
-    }
+    };
 
-}(jQuery, document);
+}();
