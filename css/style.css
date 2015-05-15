@@ -28,14 +28,16 @@ li .flag{
 }
 
 .nav-header {
-	margin-top: 20px;
+	margin-top: 15px;
 }
 
-#list1 {
+#list1, #list2 {
 	height: 85%;
-    margin-bottom: 0;
-    overflow: auto; 
+  margin-bottom: 0;
+  overflow: hidden; /*hides overflow, does not let scrolling. FIX */
 }
+
+
 
 .btn-endturn1{
   color: #fff;

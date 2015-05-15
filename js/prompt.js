@@ -46,8 +46,7 @@ function swalPrompt(regionName, code){
 	           	};
     			   	playerSelected(app.playerCounter);
     			   	var countryCode = country.code;
-    			   	showConqueredCountries(app.playerCounter);
-			   	
+    			   	showConqueredCountries(app.playerCounter); 	
 			   	
 			   				
 	            }

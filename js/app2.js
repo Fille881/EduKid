@@ -191,17 +191,26 @@ function showConqueredCountries(playerCounter){
 	 		$.each( app.playerCountries.player1, function(i, country) {
 		 		$("#list1").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
         $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');
+        sortConqueredCountries("#list1");
 			});	
 		}else{
 			$("#list2").empty();
       $("#list2").append('<p class="list-group-item nav-header list-group-item-info"><small> Total points: </small>' + app.pointsP2 + '</p>' );      
       $.each( app.playerCountries.player2, function(i, country) {
         $("#list2").append('<li class="list-group-item" id=' + country.name + '><span class="flag"></span><span class="badge">' + country.points + '</span>'  + ' '  + country.name +' </li>' ); 
-        $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');    
-      }); 
+        $("#" + country.name + " .flag").css('background-image', 'url(../img/flags/squareflags/' + country.name + '.png)');
+        sortConqueredCountries("#list2");
+    }); 
 	}	
 }
 
+//function to sort conquered countries alphabetically
+function sortConqueredCountries(list){
+  var $list = $(list);
+  $list.children().detach().sort(function(a, b) {
+      return $(a).text().localeCompare($(b).text());
+    }).appendTo($list);
+}
 
 // Instance the tour
 var tour = new Tour({
