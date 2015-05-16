@@ -50,11 +50,11 @@ We would use the shopping cart like this:
 app.shoppingcart.init();  // the startupthis-function will run
 app.shoppingcart.addGrocery('Hamburger');
 ```
-// But we can't do this:
+But we can't do this:
 ```js
 app.shoppingcart.items = ['someLettuce', 'Candy'];
 ```
-Because there is no `items` member on the object we returned in the module -> it is accessible only within the module! That is useful, because we don't need to worry about people using internal functions and variables in weird ways in other parts of the app. It also means we are free to change anything we want inside our module, without any other part of our app breaking because it depended on our 'internal' functions.
+because there is no `items` member on the object we returned in the module; it is accessible only within the module! That is useful, because we don't need to worry about people using internal functions and variables in weird ways in other parts of the app. It also means we are free to change anything we want inside our module, without any other part of our app breaking because it depended on our 'internal' functions.
 
 In addition, there is no risk for a name collision if some other part of the app creates a variable named `items`, `items` here exists only within this function/module. We get one more benefit of naming the module also: If you would just have a 'loose' function called `addGrocery`, that could mean 'add grovery to my favorite groceries list', or 'add grocery to shopping cart', or 'add grocery to something else...'
 ```js
@@ -169,7 +169,7 @@ if (app.playerCounter % 2 == 0){
 }
 ```
 It works, but I think a key-point is that how we always need to have this `if` statement as soon as we need to do something with the current player.
-But notice how the code is exactly the same in both if and esle, it is just the playervariables we use that changes.
+But notice how the code is exactly the same in both `if` and `else`, it is just the playervariables we use that changes.
 
 So lets try again with a different approach:
 ```js
@@ -183,7 +183,7 @@ playerObj.countries.forEach(function(conquered) {
 
 I think the ability to avoid pasting the same code twice (`if` and `else`) is quite nice,
 and it often makes the code shorter and I think easier to overview.
-We can try avoiding the repetion with the first approach like this:
+If we really wanted to use the first approach, we can try avoiding the repetition like this:
 ```js
 var playerid = (app.playerCounter % 2) + 1;  // Adding 1 so we get 1 or 2 instead of 0 or 1
 console.log(app["pointsP" + playerid]);
@@ -208,5 +208,5 @@ A great feat is actually doing stuff and creating an app that does something.
 
 
 PS. I guess the change I doubt the most is the introduction of the EduMap module
-(instead of just letting the map functions lay freely in EduMap.js)
+(instead of just letting the map functions lay freely in EduMap.js).
 We can see what you people think on monday!
