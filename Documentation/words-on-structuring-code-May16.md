@@ -1,5 +1,4 @@
-# Structuring code
-## and the changes I made
+# Notes on structuring code (and changes I made)
 
 I would say the most important thing is that the code works - getting things done.
 The end-user does not see (and probably don't care) how the code looks/is structured.
@@ -9,6 +8,7 @@ With that said, refactoring code can help make it a bit more redable (especially
 pros:
 - you can learn to write better code
 - can make the current code more readable and managable
+
 cons:
 - you can mess it up for people
 - they have to learn the code again
@@ -56,16 +56,17 @@ app.shoppingcart.items = ['someLettuce', 'Candy'];
 ```
 Because there is no `items` member on the object we returned in the module -> it is accessible only within the module! That is useful, because we don't need to worry about people using internal functions and variables in weird ways in other parts of the app. It also means we are free to change anything we want inside our module, without any other part of our app breaking because it depended on our 'internal' functions.
 
-In addition, there is no risk for a name collision if some other part of the app creates a variable named `items`, `items` here exists only within this function/module. We get one more benefit of naming the module also: If you would just have a 'loose' function called addGrocery, that could mean
-'add grovery to my favorite groceries list', or 'add grocery to shopping cart', or 'add grocery to something else...'
+In addition, there is no risk for a name collision if some other part of the app creates a variable named `items`, `items` here exists only within this function/module. We get one more benefit of naming the module also: If you would just have a 'loose' function called `addGrocery`, that could mean 'add grovery to my favorite groceries list', or 'add grocery to shopping cart', or 'add grocery to something else...'
 ```js
 app.shoppingcart.addGrocery(); // makes it extra clear that it has to do with the shopping cart.
 ```
 
 
-For our EduKid site, I thought we had quite the number of functions. I thought I'd just move the map-related functions to a separate file. However, that would not give the benefit of having a name like EduMap.changeBGcolor(), so that is why I used the module pattern. The drawback is that it is some extra complexity for our group, and you have to remember to add functions you want public to the 'return' in the bottom. Not sure it is worth it for our purposes.
+For our EduKid site, I thought we had quite the number of functions. I thought I'd just move the map-related functions to a separate file. However, that would not give the benefit of having a name like `EduMap.changeBGcolor()`, so that is why I used the module pattern. The drawback is that it is some extra complexity for our group, and you have to remember to add functions you want public to the 'return' in the bottom. Not sure it is worth it for our purposes.
 
-Another thing I did was introduce a Player class that keeps every players points and countries in one place (inside a Player object). A first reason is that we started to have alot of player-related variables on our app-object:
+### Adding a `Player` class to our EduKid project
+
+Another thing I did was introduce a `Player` class that keeps every players points and countries in one place (inside a `Player` object). A first reason is that we started to have alot of player-related variables on our app-object:
 ```js
 app.pointsP1 = 0;
 app.pointsP2 = 0;
@@ -121,7 +122,7 @@ But what are some benefits with having this `Player` class instead of just loose
 - It can be nice to keep functions closely tied to a player inside the `Player` class itself.
 - If we now want to add a e.g. player color, we can easily add more functionality to the Player class.
 
-
+### Tiny encapsulation of global variable; and about style
 Another thing I did was concerning the global
 ```js
 app.playerCounter = 0;
@@ -133,7 +134,7 @@ if (playerCounter % 2 == 0){  // this is player1
     } else { /*this must be player 2 */ }
 ```
 
-I wanted to see if I could make it simpler to get the currentPlayer-id, and also a less error-prone way of switching the currentPlayer. The thing with having a global playerCounter-variable is that every part of the app could change it, which _might_ make things more tricky if several parts of the app touches that variable.
+I wanted to see if I could make it simpler to get the currentPlayer-id, and also a less error-prone way of switching the currentPlayer. The thing with having a global `playerCounter`-variable is that every part of the app could change it, which _might_ make things more tricky if several parts of the app touches that variable.
 A solution would be to hide the real variable, so that you can't do whatever you like with it. The only way to change the variable would be by to ask some function to do it. Like this:
 ```js
 app.currentPlayer = function () {
@@ -149,7 +150,7 @@ app.currentPlayer = function () {
 }();  // <- note how the outer function is executed immediately, we get the object with 'change' and 'get'.
 ```
 
-This is like the module-pattern actually. We hide an variable, and only allow it to be accessed through the 'change' or 'get' functions. The `change` and `get` are variables that each hold functions.
+This is like the module-pattern actually. We hide an variable, and only allow it to be accessed through the `change` or `get` functions. The `change` and `get` are variables that each hold functions.
 
 So lets say that we want to print the points and all conquered countries of the current player.
 In the previous style, it could be done like this:
@@ -194,6 +195,7 @@ It works, but imagine doing this everytime we need to do something with the curr
 (and don't want to duplicate code with unnecessary if-else(player1/player2) ).
 It is much easier to make a typo too, which can lead to bugs. 
 
+### Closing words
 
 I think the changes I did were certainly not absolutely necessary. But I learned some along the way.
 I feel like it's a iterative process. You try to restructure a bit and see if it looks better. The
@@ -203,7 +205,6 @@ If one would look for the perfect structure of code, I wonder if any app would a
 
 A great feat is actually doing stuff and creating an app that does something.
 (In comparison it wasn't that hard for me to come in later with a fresh perspective and just change existing code)
-
 
 
 PS. I guess the change I doubt the most is the introduction of the EduMap module
