@@ -53,7 +53,7 @@ $(document).ready(function() {
   'use strict';
   //endturn();
   // Let us start up this application  
-  app.EduMap.init(); // Load the map
+  loadMap(); // Load the map
   resizeMap();
   $(window).resize(resizeMap);
   localStorage.clear();
@@ -86,7 +86,7 @@ function init_language () {
 function endturn(){
                
     app.currentPlayer.change();
-    app.EduMap.changeBGcolor(); 
+    changeBGcolor(); 
     // Remember to change classes here for bold
     console.log(app.currentPlayer.get());
 }
@@ -100,6 +100,7 @@ function resizeMap(){
   
 }
 
+//Sets language, lang could be 'se' or 'en'
 function setLanguage(lang) {
   i18n.setLng(lang, function(t) {
     $(document.body).i18n();

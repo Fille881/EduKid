@@ -32,7 +32,7 @@ function swalPrompt(regionName, code){
       },
       function(inputValue){ // Called when we press "Ok"
         if (inputValue === false) {
-          app.EduMap.deselectCountry(code);
+          deselectCountry(code);
           return false;
         }
         if (inputValue === "") {
@@ -51,9 +51,9 @@ function swalPrompt(regionName, code){
           showConqueredCountries(playerObj);
 
         	if (curPlayer === 0) {
-          	 app.EduMap.regionColorOnAnswer(country, app.palette[0]);
+          	 regionColorOnAnswer(country, app.palette[0]);
         	} else {
-          	 app.EduMap.regionColorOnAnswer(country, app.palette[3]);
+          	 regionColorOnAnswer(country, app.palette[3]);
           }
 
           counter++;
@@ -65,10 +65,10 @@ function swalPrompt(regionName, code){
           console.log(country.name + ": " + counter);
           app.tries[country.name] = counter;
           if (curPlayer === 0){ // color country with wrong color
-            	app.EduMap.regionColorOnAnswer(country, app.palette[1]);
+            	regionColorOnAnswer(country, app.palette[1]);
           		}
           		else{
-            		app.EduMap.regionColorOnAnswer(country, app.palette[4]);
+            		regionColorOnAnswer(country, app.palette[4]);
           		}
 
           if (counter > 2) { // color country with 'too late' color
@@ -76,10 +76,10 @@ function swalPrompt(regionName, code){
             swal(i18n.t("questionpopup.notriesleft"));
             //swal("No tries left!", "error");
             if (curPlayer === 0){
-            app.EduMap.regionColorOnAnswer(country, app.palette[2]);
+            regionColorOnAnswer(country, app.palette[2]);
             console.log("P1 wrong: " + app.palette[2]);
             } else {
-              app.EduMap.regionColorOnAnswer(country, app.palette[5]);
+              regionColorOnAnswer(country, app.palette[5]);
             }
             endturn();
           }
