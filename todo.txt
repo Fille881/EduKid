@@ -4,6 +4,11 @@
 2. style total point counter
 3. how does a player win the game?
 4. animations
+	- CSS animation
+	- List slide ins
+	- Confetti when win game
+	- Something with lives
 5. responsive that works
 6. possibly some menu
 7. Write some questions (would be nice of some question had a picture.)
+8. Create sweetAlert prompt to get player names
