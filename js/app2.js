@@ -24,6 +24,7 @@ app.playerNames = ["player1", "player2"];
 app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
 
 app.players = []; // Will contain 2 Player-objects
+var buttonClicked = "cat";
 
 
 
@@ -86,6 +87,12 @@ function startup() {
   $(".btn-endturn1, .btn-endturn2").click(endturn);
   
 }
+
+  $("#answer1").click(checkAnswer);
+
+ 
+});
+
 
 function init_language () {
   console.log("init lanaguage");
@@ -195,5 +202,11 @@ app.tour = new Tour({
 
 ]});
 
+function checkAnswer(event){
+	
+	console.log("hello");
+	buttonClicked = "blue";
+	
+}
 
 
