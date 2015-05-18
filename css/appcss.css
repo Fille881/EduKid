@@ -7,6 +7,13 @@
   margin-bottom: 0;
 }
 
+#mainMenuButton {
+	position: fixed;
+	top: 95%;
+  left: 50%;
+
+}
+
 .jvectormap-tip {
   border:  1px solid white;
   background: #4A7E2A;

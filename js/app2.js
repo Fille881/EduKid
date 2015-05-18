@@ -53,7 +53,21 @@ $(document).ready(function() {
   'use strict';
   //endturn();
   // Let us start up this application  
-  loadMap(); // Load the map
+  // Load the map
+
+  mainMenu();
+  $("#mainMenuButton").click(mainMenu);
+  $("#startButton").click(startup);
+  
+  
+
+});
+
+function startup() {
+  app.countries = {}; // This will hold the json map-data
+  app.map = {}; // Will hold the map plugin
+  
+  loadMap();
   resizeMap();
   $(window).resize(resizeMap);
   localStorage.clear();
@@ -70,9 +84,8 @@ $(document).ready(function() {
   
   // Bind buttons
   $(".btn-endturn1, .btn-endturn2").click(endturn);
-
- 
-});
+  
+}
 
 function init_language () {
   console.log("init lanaguage");
@@ -137,6 +150,7 @@ function showConqueredCountries(playerObj){
 
 }
 
+
 //function to sort conquered countries alphabetically
 function sortConqueredCountries(list){
   var $list = $(list);
@@ -144,6 +158,25 @@ function sortConqueredCountries(list){
       return $(a).text().localeCompare($(b).text());
     }).appendTo($list);
 }
+
+function mainMenu(){
+  swal({
+    title: "Main Menu",
+    text: "<button id='startButton'>Start Game</button><br>"+
+          "<button id='settingsButton'>Settings</button>",
+    showCancelButton: true,
+    showConfirmButton: false,
+    cancelButtonText: "Close",
+    animation: "slide-from-bottom",
+    closeOnConfirm: false,
+    html: true,
+  });
+  
+  
+  
+ }
+ 
+
 
 /////// Instance the tour ////////
 app.tour = new Tour({
