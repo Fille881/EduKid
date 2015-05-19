@@ -59,7 +59,7 @@ $(document).ready(function() {
   mainMenu();
   $("#mainMenuButton").click(mainMenu);
   $("#startButton").click(startup);
-  
+  $("#answer1").click(checkAnswer);
   
 
 });
@@ -88,10 +88,10 @@ function startup() {
   
 }
 
-  $("#answer1").click(checkAnswer);
+
 
  
-});
+
 
 
 function init_language () {
