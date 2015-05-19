@@ -44,6 +44,9 @@ Player.prototype.addcountry = function (name, points, code) {
     points: points,
     code: code,
   });
+  
+  
+  
 };
 
 /////
@@ -65,6 +68,7 @@ $(document).ready(function() {
 });
 
 function startup() {
+  app.map.reset = {};
   app.countries = {}; // This will hold the json map-data
   app.map = {}; // Will hold the map plugin
   

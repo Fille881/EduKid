@@ -32,8 +32,9 @@ function swalPrompt(regionName, code){
       animation: "slide-from-top",
       inputPlaceholder: "Write your answer here" ,
       },
-      function(inputValue){ // Called when we press "Ok"
+      function(inputValue){// Called when we press "Ok"
 	     // console.log(buttonClicked);
+       console.log("Correct answer.");
         if (inputValue === false) {
           deselectCountry(code);
           return false;
@@ -51,8 +52,16 @@ function swalPrompt(regionName, code){
           var playerObj = app.players[curPlayer];
           playerObj.addpoints(country.points); // might need parseint here
           playerObj.addcountry(regionName, country.points, country.code);
-          showConqueredCountries(playerObj);
+          showConqueredCountries(playerObj); // <- we render the whole countrylist again
 
+          // Now we want to modify the newly added country on the page, to animate it
+          $("#" + regionName).addClass('anim-invisible'); // <-- makes element invisible
+          // this means: call this function in 0 milliseconds(but after the rest of the code has run)
+          setTimeout(function () { 
+            $("#" + regionName).addClass('load'); // fade it in!
+          }, 0);
+
+        
         	if (curPlayer === 0) {
           	 regionColorOnAnswer(country, app.palette[0]);
         	} else {
