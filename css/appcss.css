@@ -36,6 +36,18 @@
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
           box-shadow: 0 1px 2px rgba(0, 0, 0, .075);
 }
-	
-	
+
+#Sweden.list-group-item {
+    opacity: 0;
+    -webkit-transition: opacity 5s ease-in;
+       -moz-transition: opacity 5s ease-in;
+        -ms-transition: opacity 5s ease-in;
+         -o-transition: opacity 5s ease-in;
+            transition: opacity 5s ease-in;
 }
+
+#Sweden.list-group-item.load {
+    opacity: 1;
+}
+
+
