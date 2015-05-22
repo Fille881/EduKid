@@ -38,17 +38,23 @@
 }
 
 .anim-invisible {
-    opacity: 0;
-    -webkit-transition: opacity 2s ease-in;
-       -moz-transition: opacity 2s ease-in;
-        -ms-transition: opacity 2s ease-in;
-         -o-transition: opacity 2s ease-in;
-            transition: opacity 2s ease-in;
+    opacity: 0.01;
+    -webkit-transition: opacity 1s ease-in, transform 1s ease-out;
+       -moz-transition: opacity 1s ease-in, transform 1s ease-out;
+        -ms-transition: opacity 1s ease-in, transform 1s ease-out;
+         -o-transition: opacity 1s ease-in, transform 1s ease-out;
+            transition: opacity 1s ease-in, transform 1s ease-out;
+    transform: translateX(300px);
+    z-index: 9999;
 }
 
+.anim-from-left {
+  transform: translateX(-300px);
+}
 
 .load {
   opacity: 1;
+  transform: translateX(0px);
 }
 
 

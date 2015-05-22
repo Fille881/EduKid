@@ -65,6 +65,7 @@ function swalPrompt(regionName, code){
         	if (curPlayer === 0) {
           	 regionColorOnAnswer(country, app.palette[0]);
         	} else {
+            $("#" + regionName).addClass('anim-from-left');
           	 regionColorOnAnswer(country, app.palette[3]);
           }
 

@@ -82,7 +82,7 @@ ul {
 #list1, #list2 {
 	height: 85%;
   margin-bottom: 0;
-  overflow: hidden; /*hides overflow, does not let scrolling. FIX */
+  overflow: visible; /*hides overflow, does not let scrolling. FIX */ /*edit2: I set it to visible again to allow new countries to fly in.;
 }
 
 
