@@ -28,15 +28,27 @@
     return app.countries[random_id].code;
   }
 
-
+  function setBodyBGcolor() {
+    var playerOne = "#ccccff";
+    var playerTwo = "#F5CCA3";
+      if(app.currentPlayer.get() === 0){
+      $('body').css('background-color', playerOne);
+    }else{
+      $('body').css('background-color', playerTwo);
+    } 
+  }
 
   //change background color depending on current player number
   function changeBGcolor(playerCounter){
     console.log("changeBGcolor");
+    var playerOne = "#ccccff";
+    var playerTwo = "#F5CCA3";
     if(app.currentPlayer.get() === 0){
-      app.map.setBackgroundColor("#ccccff");
+      app.map.setBackgroundColor(playerOne);
+      setBodyBGcolor();
     }else{
-      app.map.setBackgroundColor("#F5CCA3");
+      app.map.setBackgroundColor(playerTwo);
+      setBodyBGcolor();
     }  
   }
 

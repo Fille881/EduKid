@@ -4,11 +4,11 @@
   <title>Map Game</title>
   <link rel="stylesheet" href="jquery-jvectormap-2.0.2.css" type="text/css" media="screen"/>
   <link rel="stylesheet" type="text/css" href="../plugin/dist/sweetalert.css">
-  <link rel="stylesheet" type="text/css" href="../css/appcss.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <link href="../css/bootstrap-tour.min.css" rel="stylesheet">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">  
+  <link rel="stylesheet" type="text/css" href="../css/appcss.css">
   <audio id="Spain" preload="auto"> <source src="../Spain.mp3"></source></audio>
   <script src="../plugin/dist/sweetalert.min.js"></script>
   <script src="jquery-1.11.2.min.js"></script>
@@ -28,17 +28,17 @@
     
 <div class="container-fluid" id="main">
 	<div class="row" style="margin-right:0px;">
-		<div class="col-md-2 player" id="player1">
-			<h3 data-i18n="playerlist.player1">Player 1</h3>
-			<button class="btn btn-endturn1" data-i18n="playerlist.endturn">End turn</button>			
-			<div class="list-group-custom" id="list1">
-				<p class="list-group-item nav-header list-group-item-info" data-i18n="playerlist.conquered">Countries conquered</p>
-			</div>	
-		</div>
-		<div class="col-md-8" id="map">
+		<div class="" id="map"></div>
+    <div class="player leftplayer" id="player1">
+      <h3 data-i18n="playerlist.player1">Player 1</h3>
+      <button class="btn btn-endturn1" data-i18n="playerlist.endturn">End turn</button>     
+      <div class="list-group-custom" id="list1">
+        <p class="list-group-item nav-header list-group-item-info" data-i18n="playerlist.conquered">Countries conquered</p>
+      </div>  
+    </div>
 		
-		</div>
-		<div class="col-md-2 player" id="player2">
+		
+		<div class="player rightplayer" id="player2">
 			<h3 data-i18n="playerlist.player2">Player 2:</h3>
 			<button class="btn btn-endturn2" data-i18n="playerlist.endturn">End turn</button>
 			<div class="list-group-custom" id="list2">

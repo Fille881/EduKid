@@ -2,7 +2,7 @@ var app = app || {}; // Our single global variable, that holds useful things! =)
 app.settings = {
   mapname: 'europe_mill_en',
   bgcolor: '#006994',
-  language: 'english',
+  language: 'english'
 };
 app.countries = {}; // This will hold the json map-data
 app.map = {}; // Will hold the map plugin
@@ -58,7 +58,7 @@ $(document).ready(function() {
   //endturn();
   // Let us start up this application  
   // Load the map
-
+  setBodyBGcolor();
   mainMenu();
   $("#mainMenuButton").click(mainMenu);
   $("#startButton").click(startup);

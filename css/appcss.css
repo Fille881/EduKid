@@ -14,6 +14,38 @@
 
 }
 
+
+/* lets make it responsive manually, so we can make the browser window really small
+without things breaking.
+*/
+  
+.container-fluid {
+  padding: 0;
+}
+
+.player {
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.leftplayer {
+  position: fixed;
+  width: 20%;
+  left: 0px;
+  top: 0px;
+}
+
+.rightplayer {
+  position: fixed;
+  width: 20%;
+  right: 0px;
+  top: 0px;
+}
+
+
+/* end responsive */
+
 .jvectormap-tip {
   border:  1px solid white;
   background: #4A7E2A;
