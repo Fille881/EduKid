@@ -21,6 +21,12 @@
         "points": "Poäng: ",
         "youwrote": "Du skrev: "
     },
+    "menu": {
+      "newgame": "Börja spela",
+      "settings": "Inställningar",
+      "openmenu": "Meny",
+      "close": "Stäng"
+    },
     "country": {
         "name": {
           "MK":"Macedonien",

@@ -171,10 +171,10 @@ function sortConqueredCountries(list){
 }
 
 function mainMenu(){
+  console.log("menu translation: ", i18n.t("menu.close"));
   swal({
-    title: "Main Menu",
-    text: "<button id='startButton'>Start Game</button><br>"+
-          "<button id='settingsButton'>Settings</button>",
+    title: $('#hiddenlogo').html(),
+    text: Mustache.render($('#menucontent').html(), {}),
     showCancelButton: true,
     showConfirmButton: false,
     cancelButtonText: "Close",

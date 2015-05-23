@@ -21,6 +21,12 @@
         "points": "Points: ",
         "youwrote": "You wrote: "
     },
+    "menu": {
+      "newgame": "Start game",
+      "settings": "Settings",
+      "openmenu": "Main Menu",
+      "close": "Close"
+    },
     "country": {
         "name": {
           "MK":"Macedonia",

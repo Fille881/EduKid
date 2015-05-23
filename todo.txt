@@ -12,3 +12,8 @@
 6. possibly some menu
 7. Write some questions (would be nice of some question had a picture.)
 8. Create sweetAlert prompt to get player names
+9. Make sure all translations work
+10. Look over color scheme
+11. Settings
+12. Rename "mainmenu" button
+13. (Does it work in chrome? what if Lars has only chrome? :P)

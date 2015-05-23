@@ -19,7 +19,7 @@ function swalPrompt(regionName, code){
     var curPlayer = app.currentPlayer.get();
 
     swal({
-	 // html:true,
+	  html:true,
       title: i18n.t("country.name."+code),
 //       text: i18n.t("country.question."+code) + '<br>' + '<button class="answer confirm" id="answer1"> ' + country["answer"] + '</button>' + '<br>' + '<button class="answer confirm" id=answer-2> ' + country["answer-2"] + '</button>' + '<br>' + '<button class="answer confirm"  id=answer-3> ' + country["answer-3"] + '</button>',
      type: "input",

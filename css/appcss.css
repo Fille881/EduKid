@@ -58,5 +58,82 @@
 }
 
 
+#hiddenlogo {
+  display: none;
+}
+
+.svglogo {
+  width: 100%;
+  overflow: visible;
+}
+
+.mark {
+    animation: rota 2s ease infinite;
+    animation-direction: alternate;
+    transform-origin: -70 30;
+    
+}
 
 
+@keyframes rota {
+    0% {
+        transform: rotate(-2deg);
+        
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+
+#startButton, #settingsButton {
+  position: relative;
+}
+
+
+.menu-lang {
+  width: 80px;
+  height: 20px;
+  position: absolute;
+  left: 0px;
+  bottom: -50px;
+  margin-bottom: 0px;
+  
+}
+
+.menu-lang img {
+  width: 40px;
+  height: 40px;
+  float: left;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.menu-lang img:hover {
+  opacity: 1;
+}
+
+
+button.popup:hover::before {
+  transform: rotate(-15deg);
+  transition: transform 0.1s ease-out 0s;
+}
+button.popup::before {
+  border-radius: 5px;
+  transform-origin: top left;
+  color: #fff;
+  content: "Go!";
+  text-align: right;
+  background-color: #d46a6a;
+  left: 0;
+  top: 0;
+  display: block;
+  padding: 5px;
+  padding-left: 15px;
+  height: 30px;
+  transform: rotate(0deg);
+  overflow: visible;
+  width: 125px;
+  z-index: -1;
+  position: absolute;
+  transition: transform 0.3s linear 0s;
