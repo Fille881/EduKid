@@ -21,6 +21,7 @@ function swalPrompt(regionName, code){
     swal({
 	  html:true,
       title: i18n.t("country.name."+code),
+      text: i18n.t("country.question."+code),
 //       text: i18n.t("country.question."+code) + '<br>' + '<button class="answer confirm" id="answer1"> ' + country["answer"] + '</button>' + '<br>' + '<button class="answer confirm" id=answer-2> ' + country["answer-2"] + '</button>' + '<br>' + '<button class="answer confirm"  id=answer-3> ' + country["answer-3"] + '</button>',
      type: "input",
       showCancelButton: true,
@@ -40,14 +41,26 @@ function swalPrompt(regionName, code){
           return false;
         }
         if (inputValue === "") {
-          swal.showInputError("You need to write something!");
+          swal.showInputError(i18n.t("questionpopup.youneedtowrite"));
           return false;
         }
-        // removed country < 3 req. 
-        if(inputValue === country.answer){
+  
+        // We want to allow answer that are _close_ to correct (and ofcourse allow exactly correct)
+        // For this, I found a javascript library that shows the difference between two strings.
+        var diff = new Levenshtein(inputValue.toLowerCase(), country.answer);
+        if(diff.distance < 3){ // You could convert one of the strings to the other, with only like 3 changes
 
           console.log("Correct answer.");
-          swal(i18n.t("questionpopup.correctanswer"), i18n.t("questionpopup.youwrote") + inputValue + "  " + i18n.t("questionpopup.points") + country.points, "success");
+
+          var successmessage;
+          if (diff.distance === 0) {
+            successmessage =  i18n.t("questionpopup.youwrote") + inputValue + "  " + i18n.t("questionpopup.points") + country.points;
+          } else {
+            successmessage =  i18n.t("questionpopup.youwrote") + inputValue + "\n" + i18n.t("questionpopup.almostperfect") + country.answer + ".   \n" + country.points + " " + i18n.t("questionpopup.points");
+          }
+
+
+          swal(i18n.t("questionpopup.correctanswer"), successmessage , "success");
 
           var playerObj = app.players[curPlayer];
           playerObj.addpoints(country.points); // might need parseint here
@@ -73,7 +86,11 @@ function swalPrompt(regionName, code){
           app.tries[country.name] = counter;
 
         }else { //counter < 2) wrong answer
-          swal.showInputError(i18n.t("questionpopup.incorrectanswer") + (2 - counter) + i18n.t("questionpopup.triesleft"));
+          var hint = "";
+          if ((2 - counter) === 1) { // if only 1 try left, let's give them a hint of the two first letters of the answer
+            hint = "   "+ "<br> " + i18n.t('questionpopup.ahint') + "\"" + country.answer.slice(0,2) + "\".";
+          }
+          swal.showInputError(i18n.t("questionpopup.incorrectanswer") + (2 - counter) + i18n.t("questionpopup.triesleft") + hint);
           counter++;
           console.log(country.name + ": " + counter);
           app.tries[country.name] = counter;

@@ -120,7 +120,7 @@ function endturn(){
 function resizeMap(){
   $("#main").width($(window).width());
   $("#map").height($(window).height());
-  $(".col-md-2").height($(window).height());
+  //$(".col-md-2").height($(window).height());
   
 }
 
@@ -128,20 +128,25 @@ function resizeMap(){
 function setLanguage(lang) {
   i18n.setLng(lang, function(t) {
     $(document.body).i18n();
+    app.players.forEach(function (playerObj, index) {
+      console.log("setting conqured for ", playerObj);
+      showConqueredCountries(playerObj, index);
+    });
   });
-  
 }
 
 
 /////// Views /////////
 
 //Shows a list with the player's conquered countries
-//Uses a template from the bottom of the html file ( flag, name, points)
-function showConqueredCountries(playerObj){
+//Uses a template from the bottom of the html file ( flag, name, points).
+// id is optional
+function showConqueredCountries(playerObj, playerid){
 
-  //var playerObj = app.players[app.currentPlayer.get()]; //get the object of the current player
-  var curPlayer = app.currentPlayer.get();
-  var elem = "#list" + (curPlayer + 1);
+  if (playerid === undefined) { // If function was called without playerid
+  playerid = app.currentPlayer.get();
+  }
+  var elem = "#list" + (playerid + 1);
   var template = $("#showConqueredCountries").html(); //get our htmltemplate
   var playerdata = { // prepare data to put into our html-template
     playerpoints: playerObj.points,

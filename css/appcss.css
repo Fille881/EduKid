@@ -3,8 +3,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 0;
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 #mainMenuButton {
@@ -15,15 +14,24 @@
 }
 
 
+body {
+  overflow: hidden;
+}
+
 /* lets make it responsive manually, so we can make the browser window really small
 without things breaking.
 */
   
+#player1 { /* For some reason, player 1 would not get a background color with this here :S */;
+  background-color: #ccccff;
+}
+
 .container-fluid {
   padding: 0;
 }
 
 .player {
+  height: 100%;
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
