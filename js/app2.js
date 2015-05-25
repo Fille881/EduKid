@@ -83,9 +83,9 @@ function startup() {
   init_language();
 
   // Initialize the tour
-  //app.tour.init();
+  app.tour.init();
   // Start the tour
-  //app.tour.start();
+  app.tour.start();
   
   // Bind buttons
   $(".btn-endturn1, .btn-endturn2").click(endturn);
@@ -199,14 +199,24 @@ app.tour = new Tour({
   steps: [
   {
     //path: "europe.html",
-    element: "#map",
-    title: "This is a map",
-    content: "In the game of maps you win or you die"
+    element: "#player1",
+    title: "Welcome!",
+    content: "In the EduKid 2-player geography quiz, you learn and win! The big thing in the middle? That's your map and gameboard. Win points by clicking or tapping on countries to answer questions."
   },
   {
-    element: "#points",
-    title: "These are your points",
-    content: "Points are good"
+    element: "#list1",
+    title: "Your list of countries and points.",
+    content: "Here, you'll see the countries that you have answered correctly about. You will also see how many of those so valuable points you've earned!"
+  },
+  {
+    element: "#mainMenuButton",
+    title: "The mainmenu",
+    content: "By clicking on the menubutton, you can always start and restart games, find settings and other things."
+  },
+  {
+    element: "#mainMenuButton",
+    title: "Let's start!",
+    content: "Have fun."
   }
 
 ]});
