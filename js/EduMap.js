@@ -1,13 +1,13 @@
 // This variable holds all functions that has anything to do with manipulating the jvector map.
 
-      //Ask question and validates answer
+  //Ask question and validates answer
   function askQuestionOnClick(code){
     'use strict';
     var regionName = app.map.getRegionName(code);
     swalPrompt(regionName, code);
   }
 
-  //deselects clicked on region, used when answer is false. 
+  //Deselects clicked on region, used when answer is false. 
   //Explanation: if regions isSelected, create an object "o", 
   //add to it property "code"(dynamic value, current country code) with value "false"
   //call setSelectedRegions with that property: value key
@@ -52,6 +52,7 @@
     }  
   }
 
+  // The main map-plugin setup
   // Fetches json-data for map and starts the jquery map plugin
   function loadMap() {
     'use strict';
@@ -77,7 +78,7 @@
               }]
           },
           selectedRegions: [getRandomCountryCode(data)],
-          onRegionTipShow: function(event, label, code) {
+          onRegionTipShow: function(event, label, code) {  // on region (country) hover, show flag and some info
             var regionName = app.map.getRegionName(code);
             var countrypoints;
 

@@ -5,7 +5,7 @@ app.settings = {
   language: 'english'
 };
 app.countries = {}; // This will hold the json map-data
-app.map = {}; // Will hold the map plugin
+app.map = {}; // Will hold the jVector map plugin object
 app.tries = {};
 app.translations = {}; // language json loaded here
 app.currentPlayer = function () {
@@ -24,8 +24,6 @@ app.playerNames = ["player1", "player2"];
 app.palette = ['green', 'orange', 'red', '#1808FF', '#FFFF08', '#000000'];
 
 app.players = []; // Will contain 2 Player-objects
-var buttonClicked = "cat";
-
 
 
 // The Player class //
@@ -45,36 +43,35 @@ Player.prototype.addcountry = function (name, points, code) {
     code: code,
   });
   
-  
-  
+
 };
 
 /////
 
 
-// When the browser has finished loading
+// When the browser has finished loading //
 $(document).ready(function() {
   'use strict';
   //endturn();
   // Let us start up this application  
-  // Load the map
   setBodyBGcolor();
   mainMenu();
   $("#mainMenuButton").click(mainMenu);
   $("#startButton").click(startup);
   $("#answer1").click(checkAnswer);
   
-
 });
 
+// This is run when "Start game" on the menu is clicked
 function startup() {
+  // Do some clearing
   app.map.reset = {};
   app.countries = {}; // This will hold the json map-data
   app.map = {}; // Will hold the map plugin
   
   loadMap();
-  resizeMap();
-  $(window).resize(resizeMap);
+  resizeMap(); // Resize to map to fit the screen
+  $(window).resize(resizeMap); // bind the function to run when the browser changes size
   localStorage.clear();
 
   app.players.push(new Player());
@@ -108,11 +105,10 @@ function init_language () {
 
 //ends player turn
 function endturn(){
-               
     app.currentPlayer.change();
     changeBGcolor(); 
     // Remember to change classes here for bold
-    console.log(app.currentPlayer.get());
+    console.log("Current player id:", app.currentPlayer.get());
 }
 
 
@@ -128,6 +124,7 @@ function resizeMap(){
 function setLanguage(lang) {
   i18n.setLng(lang, function(t) {
     $(document.body).i18n();
+    // Redraw each player score list
     app.players.forEach(function (playerObj, index) {
       console.log("setting conqured for ", playerObj);
       showConqueredCountries(playerObj, index);
@@ -139,7 +136,7 @@ function setLanguage(lang) {
 /////// Views /////////
 
 //Shows a list with the player's conquered countries
-//Uses a template from the bottom of the html file ( flag, name, points).
+//Uses a template from the bottom of the html file ( flag, name, points). (with the Mustasch library)
 // id is optional
 function showConqueredCountries(playerObj, playerid){
 
@@ -167,7 +164,7 @@ function showConqueredCountries(playerObj, playerid){
 }
 
 
-//function to sort conquered countries alphabetically
+//function to sort conquered countries alphabetically   -not used-
 function sortConqueredCountries(list){
   var $list = $(list);
   $list.children().detach().sort(function(a, b) {
@@ -175,6 +172,7 @@ function sortConqueredCountries(list){
     }).appendTo($list);
 }
 
+// Displays main menu
 function mainMenu(){
   console.log("menu translation: ", i18n.t("menu.close"));
   swal({
@@ -194,7 +192,7 @@ function mainMenu(){
  
 
 
-/////// Instance the tour ////////
+/////// Initiate the tour ////////
 app.tour = new Tour({
   steps: [
   {
@@ -220,12 +218,5 @@ app.tour = new Tour({
   }
 
 ]});
-
-function checkAnswer(event){
-	
-	console.log("hello");
-	buttonClicked = "blue";
-	
-}
 
 

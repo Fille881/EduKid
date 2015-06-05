@@ -1,3 +1,8 @@
+// This is the code for the question popup logic
+/*
+The 'swal' function is from the Sweet alert library. 
+*/
+
 function swalPrompt(regionName, code){
   'use strict';
     var currentAnswer;
@@ -7,7 +12,7 @@ function swalPrompt(regionName, code){
       return country.name == regionName;
     })[0]; // Get the first element, it will only be one
 
-    var counter;
+    var counter; // Keeps track of tries left for a question
     if (!app.tries[country.name]){
        counter = 0;
     }
@@ -23,20 +28,19 @@ function swalPrompt(regionName, code){
       title: i18n.t("country.name."+code),
       text: i18n.t("country.question."+code),
 //       text: i18n.t("country.question."+code) + '<br>' + '<button class="answer confirm" id="answer1"> ' + country["answer"] + '</button>' + '<br>' + '<button class="answer confirm" id=answer-2> ' + country["answer-2"] + '</button>' + '<br>' + '<button class="answer confirm"  id=answer-3> ' + country["answer-3"] + '</button>',
-     type: "input",
+      type: "input",
       showCancelButton: true,
       closeOnCancel: true,
       showConfirmButton: true,
-    confirmButtonText: i18n.t("questionpopup.okbutton"),
+      confirmButtonText: i18n.t("questionpopup.okbutton"),
       cancelButtonText: i18n.t("questionpopup.cancelbutton"),
       closeOnConfirm: false,
       animation: "slide-from-top",
       inputPlaceholder: "Write your answer here" ,
       },
-      function(inputValue){// Called when we press "Ok"
-	     // console.log(buttonClicked);
-       console.log("Correct answer.");
-        if (inputValue === false) {
+      function(inputValue){ // Called when we press "Ok" or 'Cancel', so let's validate the answer
+  
+        if (inputValue === false) { // If 'Cancel'
           deselectCountry(code);
           return false;
         }
@@ -75,9 +79,9 @@ function swalPrompt(regionName, code){
           }, 0);
 
         
-        	if (curPlayer === 0) {
+        	if (curPlayer === 0) { // player 1
           	 regionColorOnAnswer(country, app.palette[0]);
-        	} else {
+        	} else { // player 2
             $("#" + regionName).addClass('anim-from-left');
           	 regionColorOnAnswer(country, app.palette[3]);
           }
@@ -85,7 +89,7 @@ function swalPrompt(regionName, code){
           counter++;
           app.tries[country.name] = counter;
 
-        }else { //counter < 2) wrong answer
+        } else { // wrong answer
           var hint = "";
           if ((2 - counter) === 1) { // if only 1 try left, let's give them a hint of the two first letters of the answer
             hint = "   "+ "<br> " + i18n.t('questionpopup.ahint') + "\"" + country.answer.slice(0,2) + "\".";
@@ -106,12 +110,12 @@ function swalPrompt(regionName, code){
             swal(i18n.t("questionpopup.notriesleft"));
             //swal("No tries left!", "error");
             if (curPlayer === 0){
-            regionColorOnAnswer(country, app.palette[2]);
-            console.log("P1 wrong: " + app.palette[2]);
+              regionColorOnAnswer(country, app.palette[2]);
+              console.log("P1 wrong: " + app.palette[2]);
             } else {
               regionColorOnAnswer(country, app.palette[5]);
             }
-            endturn();
+            endturn(); // If the player uses 3 tries on a question, we end the turn
           }
 
         }
